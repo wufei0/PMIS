@@ -1,0 +1,3 @@
+COMPUTE FOR AGE
+
+(YEAR(CURDATE())-`DpntBirthYear`)-(RIGHT(CURDATE(),5)<RIGHT(CONCAT_WS('-',`DpntBirthYear`,`DpntBirthMonth`,`DpntBirthDay`),5))
