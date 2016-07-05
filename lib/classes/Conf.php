@@ -9,11 +9,11 @@ class dbConfig {
 
 	function dbConfig() {
 
-		$this->dbhost = 'acc_server';
+		$this->dbhost = 'docutracking';
 		$this->dbport = '3306';
 		$this->dbname = 'pmis';
-		$this->dbuser = 'root';
-		$this->dbpass = 'P@ssW0rd';
+		$this->dbuser = 'pmis';
+		$this->dbpass = 'pm1s';
 		$this->version = '1.0';
 
 	}
