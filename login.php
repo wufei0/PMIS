@@ -1,7 +1,7 @@
 <?php
 	ob_start();
 	define('ROOT_PATH', dirname(__FILE__));
-	
+		//
 	session_start();
 	$_SESSION['path']=ROOT_PATH;
 	$_SESSION['theme']="blue";
