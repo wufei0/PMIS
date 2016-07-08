@@ -189,6 +189,10 @@ function getEmpPage(opt,id,mode){
 				url="lib/pages/coc.php";
 				$("#win_personnel_information_1_title").html("Compensatory Time-Off");
 				break;
+			case("pr"):
+				url="lib/pages/pr.php"; console.log(mode);
+				$("#win_personnel_information_1_title").html("Performance Rating");
+				break;
 		}
 
 		$.ajax({
