@@ -27,43 +27,46 @@
 	<div style="width:640px;height:auto;overflow:auto"><br/><br/>
 		<table class="i_table" style="width:600px;">
 			<tr>
-				<td class="i_table_header" width="10px">#</td>
-				<td class='i_table_header' width=''>Name</td>
-				<td class='i_table_header'>Address</td>
-				<td class='i_table_header' width='75'>Contact Number</td>
-				<td class="i_table_header" colspan="2" width="40px">&nbsp;</td>
+				<td class="i_table_header" rowspan="2" width="10px">#</td>
+				<td class="i_table_header" colspan="2" width=''>Jan to Jun</td>
+				<td class="i_table_header" colspan="2" width=''>Jul to Dec</td>
+				<td class="i_table_header" colspan="2" width=''>OverAll</td>
+				<td class="i_table_header" rowspan="2" width=''>Year</td>
+				<td class="i_table_header" rowspan="2" colspan="2" width="40px">&nbsp;</td>
+			</tr>
+			<tr>
+				<td class="i_table_header">Score</td>
+				<td class="i_table_header">Rating</td>
+				<td class="i_table_header">Score</td>
+				<td class="i_table_header">Rating</td>
+				<td class="i_table_header">Score</td>
+				<td class="i_table_header">Rating</td>
 			</tr>
 			
 			<?php
 				$records=Array();
-				$result=$MySQLi->sqlQuery("SELECT `RefID`,`RefLName`, `RefFName`, `RefMName`, `RefExtName`, `RefAddSt`, `RefAddBrgy`, `RefAddMun`, `RefAddProv`, `RefZipCode`, `RefTel` FROM `tblempreferences`  WHERE `EmpID`='".$EmpID."' ORDER BY `RefLName` ASC;");
-				$n=1;$td=4;
+				$result=$MySQLi->sqlQuery("SELECT * FROM tblempratings  WHERE EmpID = '".$EmpID."'");
+				$n=1;$td=8;
 				while($records=mysqli_fetch_array($result, MYSQLI_BOTH)){
-					$RefLName=($records['RefLName']!="")?$records['RefLName'].", " : "";
-					$RefFName=($records['RefFName']!="")?$records['RefFName']." " : "";
-					$RefMName=($records['RefMName']!="")?substr($records['RefMName'],0,1).". " : "";
-					$RefExtName=($records['RefExtName']!="")?$records['RefExtName']."." : "";
-					$RefName=$RefLName.$RefFName.$RefMName.$RefExtName;
-					
-					$RefAddSt=($records['RefAddSt']!="")?$records['RefAddSt'].", " : "";
-					$RefAddBrgy=($records['RefAddBrgy']!="")?$records['RefAddBrgy'].", " : "";
-					$RefAddMun=($records['RefAddMun']!="")?$records['RefAddMun'].", " : "";
-					$RefAddProv=$records['RefAddProv'];
-					$RefAdd=$RefAddSt.$RefAddBrgy.$RefAddMun.$RefAddProv;
-					
+
 					if($n%2==0){echo "<tr class='i_table_row_0'>";}
 					else{echo "<tr class='i_table_row_1'>";}
 					echo "<td align='left' valign='top' style='padding:4px 3px 3px 3px;'>".$n.".</td>";
-					echo "<td class='i_table_body'>".$RefName."</td>";
-					echo "<td class='i_table_body'>".$RefAdd."</td>";
-					echo "<td class='i_table_body' align='center'>".$records['RefTel']."</td>";
-					if($Authorization[0]&&$Authorization[2]){echo "<td style='width:20px;text-align:center;border-left:1px dotted #6D84B4;padding:2px 0px 1px 3px;'><ul class='ui-widget ui-helper-clearfix ul-icons'><li id=''class='ui-state-default ui-corner-all' title='Edit' onClick='showForm(\"chrf\",\"$EmpID\",\"".$records['RefID']."\",\"1\");'><span class='ui-icon ui-icon-pencil'></span></li></ul></td>";}
+					echo "<td class='i_table_body' align='center'>$records[FirstSemesterScore]</td>";
+					echo "<td class='i_table_body' align='center'>$records[SecondSemesterScore]</td>";
+					echo "<td class='i_table_body'>$records[FirstSemesterRating]</td>";
+					echo "<td class='i_table_body'>$records[SecondSemesterRating]</td>";
+					echo "<td class='i_table_body' align='center'>0</td>";
+					echo "<td class='i_table_body'>Outstanding</td>";
+					echo "<td class='i_table_body' align='center'>$records[RatingYear]</td>";
+					if($Authorization[0]&&$Authorization[2]){echo "<td style='width:20px;text-align:center;border-left:1px dotted #6D84B4;padding:2px 0px 1px 3px;'><ul class='ui-widget ui-helper-clearfix ul-icons'><li id=''class='ui-state-default ui-corner-all' title='Edit' onClick='showForm(\"pr\",\"$EmpID\",\"".$records['RefID']."\",\"1\");'><span class='ui-icon ui-icon-pencil'></span></li></ul></td>";}
 					else{echo "<td style='width:20px;text-align:center;border-left:1px dotted #6D84B4;padding:2px 0px 1px 3px;'><ul class='ui-widget ui-helper-clearfix ul-icons'><li class='ui-state-disabled ui-corner-all'><span class='ui-icon ui-icon-pencil'></span></li></ul></td>";}
-					if($Authorization[0]&&$Authorization[3]){echo "<td style='width:20px;text-align:center;padding:2px 3px 1px 0px;'><ul class='ui-widget ui-helper-clearfix ul-icons'><li class='ui-state-default ui-corner-all' title='Delete' onClick='showForm(\"chrf\",\"$EmpID\",\"".$records['RefID']."\",\"-1\");'><span class='ui-icon ui-icon-trash'></span></li></ul></td>";}
+					if($Authorization[0]&&$Authorization[3]){echo "<td style='width:20px;text-align:center;padding:2px 3px 1px 0px;'><ul class='ui-widget ui-helper-clearfix ul-icons'><li class='ui-state-default ui-corner-all' title='Delete' onClick='showForm(\"pr\",\"$EmpID\",\"".$records['RefID']."\",\"-1\");'><span class='ui-icon ui-icon-trash'></span></li></ul></td>";}
 					else{echo "<td style='width:20px;text-align:center;padding:2px 3px 1px 0px;'><ul class='ui-widget ui-helper-clearfix ul-icons'><li class='ui-state-disabled ui-corner-all'><span class='ui-icon ui-icon-trash'></span></li></ul></td>";}
 					echo "</tr>";
 					echo "</tr>";
-					$n+=1; 
+					$n+=1;
+
 				} 
 				while($n<=1) {
 					if($n%2==0){echo "<tr class='i_table_row_0'>";}
