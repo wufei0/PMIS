@@ -248,6 +248,8 @@ function showForm(opt,id,xid,mode){
 		
 		case("usr"):url="lib/forms/user_information_form.php";frmTitle="User";break;
 		case("xxx"):url="lib/forms/xxx.php";frmTitle="xxx";break;
+		
+		case("pr"):url="lib/forms/pr.php";frmTitle="Performance Rating";break;
 	}
 	
 	$(function(){
@@ -366,8 +368,12 @@ function processForm(opt,form){
 				url="lib/scripts/_process_user_info.php";
 				qParams={mode:form.mode.value,UsrID:form.UsrID.value,NewKey:form.NewKey2.value,UsrGrpID:form.UsrGrpID.value,sid:Math.random()};
 				break;
+			case("pr"):
+				url="lib/scripts/_process_pr.php";
+				qParams={mode:form.mode.value,EmpID:form.EmpID.value,RatingID:form.RatingID.value,FirstSemesterScore:form.FirstSemesterScore.value,FirstSemesterRating:form.FirstSemesterRating.value,SecondSemesterScore:form.SecondSemesterScore.value,SecondSemesterRating:form.SecondSemesterRating.value,OverAllScore:form.OverAllScore.value,OverAllRating:form.OverAllRating.value,RatingYear:form.RatingYear.value};
+				break;
 		}
-		
+
 		if(opt=="chst"){$("#global_loading_div").width($(window).width());$("#global_loading_div").height($(window).height());}
 		
 		$.ajax({
@@ -382,9 +388,9 @@ function processForm(opt,form){
 			success:function(data){ if(debugMode){alert(data);};
 				var fields=new Array();
 				fields=data.split('|');
-				if(fields[0]=="-1"){$('#d_message').dialog({close:function(event,ui){window.location.href="logout.php";}});showMessage(fields[2]);}
-				else if(fields[0]=="0"){showMessage(fields[2]);}
-				else if(fields[0]=="1"){
+				if((fields[0]=="-1") || (fields[0]==-1)){$('#d_message').dialog({close:function(event,ui){window.location.href="logout.php";}});showMessage(fields[2]);}
+				else if((fields[0]=="0") || (fields[0]==0)){showMessage(fields[2]);}
+				else if((fields[0]=="1") || (fields[0]==1)){
 					showMessage(fields[2]);
 					$('#d_form_input').dialog('close');
 					$('#d_message').dialog({close:function(event,ui){

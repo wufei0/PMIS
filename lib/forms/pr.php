@@ -15,75 +15,81 @@
 	
 	
 	$EmpID=isset($_POST['id'])?trim(strip_tags($_POST['id'])):'00000';
-	$RefID=isset($_POST['xid'])?trim(strip_tags($_POST['xid'])):'';
+	$RatingID=isset($_POST['xid'])?trim(strip_tags($_POST['xid'])):'';
 	$mode=isset($_POST['mode'])?trim(strip_tags($_POST['mode'])):'0';
 	echo "1|$EmpID|";
-	
-	$MONTHS=Array('','JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC');
 	
 	if($EmpID!='00000'){
 		$MySQLi=new MySQLClass();
 		$records=Array();
 		$InputState="";
 		if($mode==-1){
-			$result=$MySQLi->sqlQuery("SELECT * FROM `tblempreferences` WHERE `EmpID`='".$EmpID."' AND `RefID`='".$RefID."' LIMIT 1;");
+			$result=$MySQLi->sqlQuery("SELECT * FROM tblempratings WHERE EmpID = '".$EmpID."' AND RatingID = '".$RatingID."' LIMIT 1;");
 			$records=mysqli_fetch_array($result, MYSQLI_BOTH);
 			$InputState="disabled";
 		}
 		else if($mode==0){
-			$records['RefLName']=$records['RefFName']=$records['RefMName']=$records['RefExtName']=$records['RefAddSt']=$records['RefAddMun']=$records['RefAddBrgy']=$records['RefAddProv']=$records['RefZipCode']=$records['RefTel']="";
+			$records['FirstSemesterScore']=$records['SecondSemesterScore']=$records['OverAllScore']="";
+			$records['FirstSemesterRating']=$records['SecondSemesterRating']=$records['OverAllRating']="";
+			$records['RatingYear']="";
 		}
 		else if($mode==1){
-			$result=$MySQLi->sqlQuery("SELECT * FROM `tblempreferences` WHERE `EmpID`='".$EmpID."' AND `RefID`='".$RefID."' LIMIT 1;");
+			$result=$MySQLi->sqlQuery("SELECT * FROM tblempratings WHERE EmpID = '".$EmpID."' AND RatingID = '".$RatingID."' LIMIT 1;");
 			$records=mysqli_fetch_array($result, MYSQLI_BOTH);
 		}
 ?>
 <center>
-	<form name="f_Ref_info" onSubmit="processForm('chrf',this);return false;"><br/>
-		<table class="form_window">	<?php //Spouse"s Name... ?>
+	<form name="f_PR_info" onSubmit="processForm('pr',this);return false;"><br/>
+		<table class="form_window">
 			<tr>
-				<td class="form_label" style="width:200px;"><label>LAST NAME: </label></td>
-				<td class="pds_form_input"><input value="<?php echo $records['RefLName']; ?>" type="text" id="RefLName" name="RefLName" class="text_input sml_frm_fld" <?php echo $InputState; ?> /></td>
+				<td class="form_label" style="width:100px;"><label>JAN TO JUN SCORE: </label></td>
+				<td class="pds_form_input"><input value="<?php echo $records['FirstSemesterScore']; ?>" type="text" name="FirstSemesterScore" id="FirstSemesterScore" class="text_input sml_frm_fld" <?php echo $InputState; ?> style="width:100px;" onChange="evalScore(this);" /></td>
+				<td class="form_label" style="width:100px;"><label>JAN TO JUN RATING: </label></td>
+				<td class="pds_form_input">
+					<select name="FirstSemesterRating" id="FirstSemesterRating">
+						<option value="">-</option>					
+						<option value="Outstanding" <?php if ($records['FirstSemesterRating'] == strtoupper("Outstanding")) echo 'selected="selected"'; ?>>Outstanding</option>
+						<option value="Very Satisfactory" <?php if ($records['FirstSemesterRating'] == strtoupper("Very Satisfactory")) echo 'selected="selected"'; ?>>Very Satisfactory</option>
+						<option value="Satisfactory" <?php if ($records['FirstSemesterRating'] == strtoupper("Satisfactory")) echo 'selected="selected"'; ?>>Satisfactory</option>
+						<option value="Unsatisfactory" <?php if ($records['FirstSemesterRating'] == strtoupper("Unsatisfactory")) echo 'selected="selected"'; ?>>Unsatisfactory</option>
+						<option value="Poor" <?php if ($records['FirstSemesterRating'] == strtoupper("Poor")) echo 'selected="selected"'; ?>>Poor</option>
+					</select>
+				</td>
 			</tr>
 			<tr>
-				<td class="form_label" style="width:200px;"><label>FIRST NAME: </label></td>
-				<td class="pds_form_input"><input value="<?php echo $records['RefFName']; ?>" type="text" name="RefFName" id="RefFName" class="text_input sml_frm_fld" <?php echo $InputState; ?> <?php echo $InputState; ?> /></td>
+				<td class="form_label"><label>JUL TO DEC SCORE: </label></td>
+				<td class="pds_form_input"><input value="<?php echo $records['SecondSemesterScore']; ?>" type="text" name="SecondSemesterScore" id="SecondSemesterScore" class="text_input sml_frm_fld" <?php echo $InputState; ?> style="width:100px;" onChange="evalScore(this);" /></td>
+				<td class="form_label" style="width:100px;"><label>JUL TO DEC RATING: </label></td>
+				<td class="pds_form_input">
+					<select name="SecondSemesterRating" id="SecondSemesterRating">
+						<option value="">-</option>					
+						<option value="Outstanding" <?php if ($records['SecondSemesterRating'] == strtoupper("Outstanding")) echo 'selected="selected"'; ?>>Outstanding</option>
+						<option value="Very Satisfactory" <?php if ($records['SecondSemesterRating'] == strtoupper("Very Satisfactory")) echo 'selected="selected"'; ?>>Very Satisfactory</option>
+						<option value="Satisfactory" <?php if ($records['SecondSemesterRating'] == strtoupper("Satisfactory")) echo 'selected="selected"'; ?>>Satisfactory</option>
+						<option value="Unsatisfactory" <?php if ($records['SecondSemesterRating'] == strtoupper("Unsatisfactory")) echo 'selected="selected"'; ?>>Unsatisfactory</option>
+						<option value="Poor" <?php if ($records['SecondSemesterRating'] == strtoupper("Poor")) echo 'selected="selected"'; ?>>Poor</option>
+					</select>
+				</td>
 			</tr>
 			<tr>
-				<td class="form_label"><label>MIDDLE NAME: </label></td>
-				<td class="pds_form_input"><input value="<?php echo $records['RefMName']; ?>" type="text" name="RefMName" id="RefMName" class="text_input sml_frm_fld" <?php echo $InputState; ?> /></td>
-			</tr>
+				<td class="form_label"><label>OVERALL SCORE: </label></td>
+				<td class="pds_form_input"><input value="<?php echo $records['OverAllScore']; ?>" type="text" name="OverAllScore" id="OverAllScore" class="text_input sml_frm_fld" <?php echo $InputState; ?> style="width:100px;" /></td>
+				<td class="form_label" style="width:100px;"><label>OVERALL RATING: </label></td>
+				<td class="pds_form_input">
+					<select name="OverAllRating" id="OverAllRating">
+						<option value="">-</option>					
+						<option value="Outstanding" <?php if ($records['OverAllRating'] == strtoupper("Outstanding")) echo 'selected="selected"'; ?>>Outstanding</option>
+						<option value="Very Satisfactory" <?php if ($records['OverAllRating'] == strtoupper("Very Satisfactory")) echo 'selected="selected"'; ?>>Very Satisfactory</option>
+						<option value="Satisfactory" <?php if ($records['OverAllRating'] == strtoupper("Satisfactory")) echo 'selected="selected"'; ?>>Satisfactory</option>
+						<option value="Unsatisfactory" <?php if ($records['OverAllRating'] == strtoupper("Unsatisfactory")) echo 'selected="selected"'; ?>>Unsatisfactory</option>
+						<option value="Poor" <?php if ($records['OverAllRating'] == strtoupper("Poor")) echo 'selected="selected"'; ?>>Poor</option>
+					</select>
+				</td>
+			</tr>			
 			<tr>
-				<td class="form_label" style="width:200px;"><label>NAME EXTENSION: </label></td>
-				<td class="pds_form_input"><input value="<?php echo $records['RefExtName']; ?>" type="text" name="RefExtName" id="RefExtName" class="text_input" <?php echo $InputState; ?> style="width:30px;"/></td>
-			</tr>
-			<tr>
-				<td class="form_label" style="width:200px;"><label>ADDRESS: </label></td>
-				<td class="form_label" style="width:200px;"><label>&nbsp;</label></td>
-			</tr>
-			<tr>
-				<td class="form_label" style="width:200px;"><label>Street: </label></td>
-				<td class="pds_form_input"><input value="<?php echo $records['RefAddSt']; ?>" type="text" name="RefAddSt" id="RefAddSt" class="text_input sml_frm_fld" <?php echo $InputState; ?> /></td>
-			</tr>
-			<tr>
-				<td class="form_label" style="width:200px;"><label>Barangay: </label></td>
-				<td class="pds_form_input"><input value="<?php echo $records['RefAddBrgy']; ?>" type="text" name="RefAddBrgy" id="RefAddBrgy" class="text_input sml_frm_fld" <?php echo $InputState; ?> /></td>
-			</tr>
-			<tr>
-				<td class="form_label" style="width:200px;"><label>Municipality: </label></td>
-				<td class="pds_form_input"><input value="<?php echo $records['RefAddMun']; ?>" type="text" name="RefAddMun" id="RefAddMun" class="text_input sml_frm_fld" <?php echo $InputState; ?> /></td>
-			</tr>
-			<tr>
-				<td class="form_label" style="width:200px;"><label>Province: </label></td>
-				<td class="pds_form_input"><input value="<?php echo $records['RefAddProv']; ?>" type="text" name="RefAddProv" id="RefAddProv" class="text_input sml_frm_fld" <?php echo $InputState; ?> /></td>
-			</tr>
-			<tr>
-				<td class="form_label" style="width:200px;"><label>Zip Code: </label></td>
-				<td class="pds_form_input"><input value="<?php echo $records['RefZipCode']; ?>" type="text" name="RefZipCode" id="RefZipCode" class="text_input" <?php echo $InputState; ?> style="width:30px;" /></td>
-			</tr>
-			<tr>
-				<td class="form_label" style="width:200px;"><label>CONTACT NUMBER: </label></td>
-				<td class="pds_form_input"><input value="<?php echo $records['RefTel']; ?>" type="text" name="RefTel" id="RefTel" class="text_input sml_frm_fld" <?php echo $InputState; ?> /></td>
+				<td class="form_label" style="width:100px;"><label>YEAR: </label></td>
+				<td class="pds_form_input"><input value="<?php echo $records['RatingYear']; ?>" type="text" name="RatingYear" id="RatingYear" class="text_input sml_frm_fld" <?php echo $InputState; ?> style="width:100px;" /></td>
+				<td colspan="2">&nbsp;</td>
 			</tr>
 		</table>
 		<br/>
@@ -95,8 +101,33 @@
 			</tr>
 		</table>
 		<input type="hidden" name="mode" id="mode" value="<?php echo $mode; ?>" />
-		<input type="hidden" name="RefID" id="RefID" value="<?php echo $RefID; ?>" />
+		<input type="hidden" name="RatingID" id="RatingID" value="<?php echo $RatingID; ?>" />
 		<input type="hidden" name="EmpID" id="EmpID" value="<?php echo $EmpID; ?>" />
 	</form>
 </center>
+<script type="text/javascript">
+	
+	var ratings = {
+		FirstSemesterScore: "FirstSemesterRating",
+		SecondSemesterScore: "SecondSemesterRating",
+		OverAllScore: "OverAllRating"
+	};
+	
+ 	function rating(score) {
+		if ((score >= 0) && (score <= 1.99)) return "Poor";
+		if ((score >= 2) && (score <= 2.99)) return "Unsatisfactory";
+		if ((score >= 3) && (score <= 3.99)) return "Satisfactory";
+		if ((score >= 4) && (score <= 4.99)) return "Very Satisfactory";
+		if (score >= 5) return "Outstanding";
+	}
+	
+	function evalScore(e) {
+
+		var id = ratings[e.name];
+		var score = $('#'+e.id).val();
+		$('#'+id).val(rating(score));
+
+	}
+	
+</script>
 <?php } ?>

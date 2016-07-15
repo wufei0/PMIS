@@ -56,12 +56,12 @@
 					echo "<td class='i_table_body' align='center'>$records[SecondSemesterScore]</td>";
 					echo "<td class='i_table_body'>$records[FirstSemesterRating]</td>";
 					echo "<td class='i_table_body'>$records[SecondSemesterRating]</td>";
-					echo "<td class='i_table_body' align='center'>0</td>";
-					echo "<td class='i_table_body'>Outstanding</td>";
+					echo "<td class='i_table_body' align='center'>$records[OverAllScore]</td>";
+					echo "<td class='i_table_body'>$records[OverAllRating]</td>";
 					echo "<td class='i_table_body' align='center'>$records[RatingYear]</td>";
-					if($Authorization[0]&&$Authorization[2]){echo "<td style='width:20px;text-align:center;border-left:1px dotted #6D84B4;padding:2px 0px 1px 3px;'><ul class='ui-widget ui-helper-clearfix ul-icons'><li id=''class='ui-state-default ui-corner-all' title='Edit' onClick='showForm(\"pr\",\"$EmpID\",\"".$records['RefID']."\",\"1\");'><span class='ui-icon ui-icon-pencil'></span></li></ul></td>";}
+					if($Authorization[0]&&$Authorization[2]){echo "<td style='width:20px;text-align:center;border-left:1px dotted #6D84B4;padding:2px 0px 1px 3px;'><ul class='ui-widget ui-helper-clearfix ul-icons'><li id=''class='ui-state-default ui-corner-all' title='Edit' onClick='showForm(\"pr\",\"$EmpID\",\"".$records['RatingID']."\",\"1\");'><span class='ui-icon ui-icon-pencil'></span></li></ul></td>";}
 					else{echo "<td style='width:20px;text-align:center;border-left:1px dotted #6D84B4;padding:2px 0px 1px 3px;'><ul class='ui-widget ui-helper-clearfix ul-icons'><li class='ui-state-disabled ui-corner-all'><span class='ui-icon ui-icon-pencil'></span></li></ul></td>";}
-					if($Authorization[0]&&$Authorization[3]){echo "<td style='width:20px;text-align:center;padding:2px 3px 1px 0px;'><ul class='ui-widget ui-helper-clearfix ul-icons'><li class='ui-state-default ui-corner-all' title='Delete' onClick='showForm(\"pr\",\"$EmpID\",\"".$records['RefID']."\",\"-1\");'><span class='ui-icon ui-icon-trash'></span></li></ul></td>";}
+					if($Authorization[0]&&$Authorization[3]){echo "<td style='width:20px;text-align:center;padding:2px 3px 1px 0px;'><ul class='ui-widget ui-helper-clearfix ul-icons'><li class='ui-state-default ui-corner-all' title='Delete' onClick='showForm(\"pr\",\"$EmpID\",\"".$records['RatingID']."\",\"-1\");'><span class='ui-icon ui-icon-trash'></span></li></ul></td>";}
 					else{echo "<td style='width:20px;text-align:center;padding:2px 3px 1px 0px;'><ul class='ui-widget ui-helper-clearfix ul-icons'><li class='ui-state-disabled ui-corner-all'><span class='ui-icon ui-icon-trash'></span></li></ul></td>";}
 					echo "</tr>";
 					echo "</tr>";
