@@ -349,6 +349,7 @@
 									<input type="radio" id="r_emp_info_menu_1_leav" name="emp_menu"/><label for="r_emp_info_menu_1_leav" class="r_emp_info_menu">Leave Applications</label><br/>
 									<!--input type="radio" id="r_emp_info_menu_1_ppls" name="emp_menu"/><label for="r_emp_info_menu_1_ppls" class="r_emp_info_menu">PLS</label><br/-->
 									<input type="radio" id="r_emp_info_menu_1_pr" name="emp_menu"/><label for="r_emp_info_menu_1_pr" class="r_emp_info_menu">Performance Rating</label><br/>									
+									<input type="radio" id="r_emp_info_menu_1_prs" name="emp_menu"/><label for="r_emp_info_menu_1_prs" class="r_emp_info_menu">PR (SyBase)</label><br/>									
 								</div>
 								<ul class='ui-widget ui-helper-clearfix ul-icons' style="margin-top:3px;margin-left:93px;">
 									<li id="e_menu_next" class='ui-state-default ui-corner-all' title='Next' onClick=''><span class='ui-icon ui-icon-carat-1-e'></span></li>

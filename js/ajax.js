@@ -193,6 +193,10 @@ function getEmpPage(opt,id,mode){
 				url="lib/pages/pr.php"; console.log(mode);
 				$("#win_personnel_information_1_title").html("Performance Rating");
 				break;
+			case("prs"):
+				url="lib/pages/prs.php"; console.log(mode);
+				$("#win_personnel_information_1_title").html("PR (SyBase)");
+				break;				
 		}
 
 		$.ajax({
@@ -369,6 +373,10 @@ function processForm(opt,form){
 				qParams={mode:form.mode.value,UsrID:form.UsrID.value,NewKey:form.NewKey2.value,UsrGrpID:form.UsrGrpID.value,sid:Math.random()};
 				break;
 			case("pr"):
+				if (form.RatingYear.value == '') {
+					showMessage("ERROR: Please enter year.~");
+					return false;
+				}			
 				url="lib/scripts/_process_pr.php";
 				qParams={mode:form.mode.value,EmpID:form.EmpID.value,RatingID:form.RatingID.value,FirstSemesterScore:form.FirstSemesterScore.value,FirstSemesterRating:form.FirstSemesterRating.value,SecondSemesterScore:form.SecondSemesterScore.value,SecondSemesterRating:form.SecondSemesterRating.value,OverAllScore:form.OverAllScore.value,OverAllRating:form.OverAllRating.value,RatingYear:form.RatingYear.value};
 				break;

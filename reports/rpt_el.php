@@ -94,7 +94,7 @@ ob_start();
 	if($OfficeID!="0"){$Where.=" AND `MotherOfficeID`='".$MySQLi->RealEscapeString($OfficeID)."'";}
 	$OrderBy=" ORDER BY ".(($OfficeID=="0")?"`MotherOfficeID` ASC,":"")." `EmpName` ASC";
 	
-	$Query="SELECT * FROM `s_eligibility`".$Where;
+	$Query="SELECT * FROM `s_eligibility`".$Where; echo $Query;
 	
 	// echo $Query; exit();
 	

@@ -47,17 +47,19 @@
 				$records=Array();
 				$result=$MySQLi->sqlQuery("SELECT * FROM tblempratings  WHERE EmpID = '".$EmpID."'");
 				$n=1;$td=8;
+				
+				$rating = array("O"=>"Outstanding","VS"=>"Very Satisfactory","S"=>"Satisfactory","U"=>"Unsatisfactory","P"=>"Poor");
 				while($records=mysqli_fetch_array($result, MYSQLI_BOTH)){
 
 					if($n%2==0){echo "<tr class='i_table_row_0'>";}
 					else{echo "<tr class='i_table_row_1'>";}
 					echo "<td align='left' valign='top' style='padding:4px 3px 3px 3px;'>".$n.".</td>";
 					echo "<td class='i_table_body' align='center'>$records[FirstSemesterScore]</td>";
-					echo "<td class='i_table_body' align='center'>$records[SecondSemesterScore]</td>";
-					echo "<td class='i_table_body'>$records[FirstSemesterRating]</td>";
-					echo "<td class='i_table_body'>$records[SecondSemesterRating]</td>";
+					echo "<td class='i_table_body' align='center'>".$rating[$records['FirstSemesterRating']]."</td>";
+					echo "<td class='i_table_body'>$records[SecondSemesterScore]</td>";
+					echo "<td class='i_table_body'>".$rating[$records['SecondSemesterRating']]."</td>";
 					echo "<td class='i_table_body' align='center'>$records[OverAllScore]</td>";
-					echo "<td class='i_table_body'>$records[OverAllRating]</td>";
+					echo "<td class='i_table_body'>".$rating[$records['OverAllRating']]."</td>";
 					echo "<td class='i_table_body' align='center'>$records[RatingYear]</td>";
 					if($Authorization[0]&&$Authorization[2]){echo "<td style='width:20px;text-align:center;border-left:1px dotted #6D84B4;padding:2px 0px 1px 3px;'><ul class='ui-widget ui-helper-clearfix ul-icons'><li id=''class='ui-state-default ui-corner-all' title='Edit' onClick='showForm(\"pr\",\"$EmpID\",\"".$records['RatingID']."\",\"1\");'><span class='ui-icon ui-icon-pencil'></span></li></ul></td>";}
 					else{echo "<td style='width:20px;text-align:center;border-left:1px dotted #6D84B4;padding:2px 0px 1px 3px;'><ul class='ui-widget ui-helper-clearfix ul-icons'><li class='ui-state-disabled ui-corner-all'><span class='ui-icon ui-icon-pencil'></span></li></ul></td>";}

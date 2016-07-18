@@ -43,31 +43,31 @@
 		<table class="form_window">
 			<tr>
 				<td class="form_label" style="width:100px;"><label>JAN TO JUN SCORE: </label></td>
-				<td class="pds_form_input"><input value="<?php echo $records['FirstSemesterScore']; ?>" type="text" name="FirstSemesterScore" id="FirstSemesterScore" class="text_input sml_frm_fld" <?php echo $InputState; ?> style="width:100px;" onChange="evalScore(this);" /></td>
+				<td class="pds_form_input"><input value="<?php echo $records['FirstSemesterScore']; ?>" type="text" name="FirstSemesterScore" id="FirstSemesterScore" class="text_input sml_frm_fld" <?php echo $InputState; ?> style="width:100px;" onKeyup="evalScore(this);" /></td>
 				<td class="form_label" style="width:100px;"><label>JAN TO JUN RATING: </label></td>
 				<td class="pds_form_input">
 					<select name="FirstSemesterRating" id="FirstSemesterRating">
 						<option value="">-</option>					
-						<option value="Outstanding" <?php if ($records['FirstSemesterRating'] == strtoupper("Outstanding")) echo 'selected="selected"'; ?>>Outstanding</option>
-						<option value="Very Satisfactory" <?php if ($records['FirstSemesterRating'] == strtoupper("Very Satisfactory")) echo 'selected="selected"'; ?>>Very Satisfactory</option>
-						<option value="Satisfactory" <?php if ($records['FirstSemesterRating'] == strtoupper("Satisfactory")) echo 'selected="selected"'; ?>>Satisfactory</option>
-						<option value="Unsatisfactory" <?php if ($records['FirstSemesterRating'] == strtoupper("Unsatisfactory")) echo 'selected="selected"'; ?>>Unsatisfactory</option>
-						<option value="Poor" <?php if ($records['FirstSemesterRating'] == strtoupper("Poor")) echo 'selected="selected"'; ?>>Poor</option>
+						<option value="O" <?php if ($records['FirstSemesterRating'] == "O") echo 'selected="selected"'; ?>>Outstanding</option>
+						<option value="VS" <?php if ($records['FirstSemesterRating'] == "VS") echo 'selected="selected"'; ?>>Very Satisfactory</option>
+						<option value="S" <?php if ($records['FirstSemesterRating'] == "S") echo 'selected="selected"'; ?>>Satisfactory</option>
+						<option value="U" <?php if ($records['FirstSemesterRating'] == "U") echo 'selected="selected"'; ?>>Unsatisfactory</option>
+						<option value="P" <?php if ($records['FirstSemesterRating'] == "P") echo 'selected="selected"'; ?>>Poor</option>
 					</select>
 				</td>
 			</tr>
 			<tr>
 				<td class="form_label"><label>JUL TO DEC SCORE: </label></td>
-				<td class="pds_form_input"><input value="<?php echo $records['SecondSemesterScore']; ?>" type="text" name="SecondSemesterScore" id="SecondSemesterScore" class="text_input sml_frm_fld" <?php echo $InputState; ?> style="width:100px;" onChange="evalScore(this);" /></td>
+				<td class="pds_form_input"><input value="<?php echo $records['SecondSemesterScore']; ?>" type="text" name="SecondSemesterScore" id="SecondSemesterScore" class="text_input sml_frm_fld" <?php echo $InputState; ?> style="width:100px;" onKeyup="evalScore(this);" /></td>
 				<td class="form_label" style="width:100px;"><label>JUL TO DEC RATING: </label></td>
 				<td class="pds_form_input">
 					<select name="SecondSemesterRating" id="SecondSemesterRating">
 						<option value="">-</option>					
-						<option value="Outstanding" <?php if ($records['SecondSemesterRating'] == strtoupper("Outstanding")) echo 'selected="selected"'; ?>>Outstanding</option>
-						<option value="Very Satisfactory" <?php if ($records['SecondSemesterRating'] == strtoupper("Very Satisfactory")) echo 'selected="selected"'; ?>>Very Satisfactory</option>
-						<option value="Satisfactory" <?php if ($records['SecondSemesterRating'] == strtoupper("Satisfactory")) echo 'selected="selected"'; ?>>Satisfactory</option>
-						<option value="Unsatisfactory" <?php if ($records['SecondSemesterRating'] == strtoupper("Unsatisfactory")) echo 'selected="selected"'; ?>>Unsatisfactory</option>
-						<option value="Poor" <?php if ($records['SecondSemesterRating'] == strtoupper("Poor")) echo 'selected="selected"'; ?>>Poor</option>
+						<option value="O" <?php if ($records['SecondSemesterRating'] == "O") echo 'selected="selected"'; ?>>Outstanding</option>
+						<option value="VS" <?php if ($records['SecondSemesterRating'] == "VS") echo 'selected="selected"'; ?>>Very Satisfactory</option>
+						<option value="S" <?php if ($records['SecondSemesterRating'] == "S") echo 'selected="selected"'; ?>>Satisfactory</option>
+						<option value="U" <?php if ($records['SecondSemesterRating'] == "U") echo 'selected="selected"'; ?>>Unsatisfactory</option>
+						<option value="P" <?php if ($records['SecondSemesterRating'] == "P") echo 'selected="selected"'; ?>>Poor</option>
 					</select>
 				</td>
 			</tr>
@@ -78,11 +78,11 @@
 				<td class="pds_form_input">
 					<select name="OverAllRating" id="OverAllRating">
 						<option value="">-</option>					
-						<option value="Outstanding" <?php if ($records['OverAllRating'] == strtoupper("Outstanding")) echo 'selected="selected"'; ?>>Outstanding</option>
-						<option value="Very Satisfactory" <?php if ($records['OverAllRating'] == strtoupper("Very Satisfactory")) echo 'selected="selected"'; ?>>Very Satisfactory</option>
-						<option value="Satisfactory" <?php if ($records['OverAllRating'] == strtoupper("Satisfactory")) echo 'selected="selected"'; ?>>Satisfactory</option>
-						<option value="Unsatisfactory" <?php if ($records['OverAllRating'] == strtoupper("Unsatisfactory")) echo 'selected="selected"'; ?>>Unsatisfactory</option>
-						<option value="Poor" <?php if ($records['OverAllRating'] == strtoupper("Poor")) echo 'selected="selected"'; ?>>Poor</option>
+						<option value="O" <?php if ($records['OverAllRating'] == "O") echo 'selected="selected"'; ?>>Outstanding</option>
+						<option value="VS" <?php if ($records['OverAllRating'] == "VS") echo 'selected="selected"'; ?>>Very Satisfactory</option>
+						<option value="S" <?php if ($records['OverAllRating'] == "S") echo 'selected="selected"'; ?>>Satisfactory</option>
+						<option value="U" <?php if ($records['OverAllRating'] == "U") echo 'selected="selected"'; ?>>Unsatisfactory</option>
+						<option value="P" <?php if ($records['OverAllRating'] == "P") echo 'selected="selected"'; ?>>Poor</option>
 					</select>
 				</td>
 			</tr>			
@@ -114,11 +114,12 @@
 	};
 	
  	function rating(score) {
-		if ((score >= 0) && (score <= 1.99)) return "Poor";
-		if ((score >= 2) && (score <= 2.99)) return "Unsatisfactory";
-		if ((score >= 3) && (score <= 3.99)) return "Satisfactory";
-		if ((score >= 4) && (score <= 4.99)) return "Very Satisfactory";
-		if (score >= 5) return "Outstanding";
+		if (score == '') return "-";
+		if ((score >= 0) && (score <= 1.99)) return "P";
+		if ((score >= 2) && (score <= 2.99)) return "U";
+		if ((score >= 3) && (score <= 3.99)) return "S";
+		if ((score >= 4) && (score <= 4.99)) return "VS";
+		if (score >= 5) return "O";
 	}
 	
 	function evalScore(e) {
@@ -126,6 +127,17 @@
 		var id = ratings[e.name];
 		var score = $('#'+e.id).val();
 		$('#'+id).val(rating(score));
+
+		// OverAllScore OverAllRating
+		var fs = ($('#FirstSemesterScore').val() == '') ? 0 : $('#FirstSemesterScore').val()
+		var ss = ($('#SecondSemesterScore').val() == '') ? 0 : $('#SecondSemesterScore').val()
+
+		var os = (parseFloat(fs)+parseFloat(ss))/2;
+		if (ss == 0) os = parseFloat(fs);
+		if (fs == 0) os = parseFloat(ss);
+		// $('#OverAllScore').val(os.toFixed(2));
+		$('#OverAllScore').val(os);
+		$('#OverAllRating').val(rating(os));
 
 	}
 	
