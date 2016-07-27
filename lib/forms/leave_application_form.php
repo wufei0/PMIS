@@ -78,7 +78,7 @@
 				</select>
 				<input type="text" name="LivAppIncDateFrYear" id="LivAppIncDateFrYear" class="text_input" <?php echo $InputState; ?> style="width:30px;" value="<?php echo $records['LivAppIncDateFrYear']; ?>" />
 				<select id="LivAppIncDayTimeFrom" name="LivAppIncDayTimeFrom" class="text_input" <?php echo $InputState; ?>>
-					<?php if($records['LivAppIncDayTimeFrom']=='AM'){echo "<option value='AM' selected>AM</option>";}else{echo "<option value='AM'>AM</option>";}if($records['LivAppIncDayTimeFrom']=='PM'){echo "<option value='PM' selected>PM</option>";}else{echo "<option value='PM'>PM</option>";} ?>
+					<?php if(isset($records['LivAppIncDayTimeFrom'])){if($records['LivAppIncDayTimeFrom']=='AM'){echo "<option value='AM' selected>AM</option>";}}else{echo "<option value='AM'>AM</option>";}if(isset($records['LivAppIncDayTimeFrom'])){if($records['LivAppIncDayTimeFrom']=='PM'){echo "<option value='PM' selected>PM</option>";}}else{echo "<option value='PM'>PM</option>";} ?>
 				</select></td>
 			</tr>
 			<tr>
@@ -92,7 +92,7 @@
 				</select>
 				<input type="text" name="LivAppIncDateToYear" id="LivAppIncDateToYear" class="text_input" <?php echo $InputState; ?> style="width:30px;" value="<?php echo $records['LivAppIncDateToYear']; ?>" />
 				<select id="LivAppIncDayTimeTo" name="LivAppIncDayTimeTo" class="text_input" <?php echo $InputState; ?>>
-					<?php if($records['LivAppIncDayTimeTo']=='AM'){echo "<option value='AM' selected>AM</option>";}else{echo "<option value='AM'>AM</option>";}if($records['LivAppIncDayTimeTo']=='PM'){echo "<option value='PM' selected>PM</option>";}else{echo "<option value='PM' selected>PM</option>";} ?>
+					<?php if(isset($records['LivAppIncDayTimeTo'])){if($records['LivAppIncDayTimeTo']=='AM'){echo "<option value='AM' selected>AM</option>";}}else{echo "<option value='AM'>AM</option>";}if(isset($records['LivAppIncDayTimeTo'])){if($records['LivAppIncDayTimeTo']=='PM'){echo "<option value='PM' selected>PM</option>";}}else{echo "<option value='PM' selected>PM</option>";} ?>
 				</select></td>
 			</tr>
 			<tr>

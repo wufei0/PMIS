@@ -13,5 +13,5 @@ if(isset($_SESSION['user'])||isset($_SESSION['username'])||isset($_SESSION['user
 	unset($_SESSION['fprinttime']);
 }
 session_destroy();
-header('Location: login.php'); 
+header('Location: login.php');
 ?>
