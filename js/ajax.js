@@ -494,6 +494,7 @@ function showMessages() {
 }
 
 function Notifier(gn) {
+	
 	$(function(){
 		$.ajax({
 			url:"lib/pages/show_notifications.php",
@@ -514,6 +515,7 @@ function Notifier(gn) {
 			error:function(xhr,ajaxOptions,thrownError){showMessage("ERROR "+xhr.status+":~"+thrownError);}
 		});
 	});
+	
 }
 
 function showNotifications() {
