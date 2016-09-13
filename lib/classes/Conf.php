@@ -9,11 +9,11 @@ class dbConfig {
 
 	function dbConfig() {
 
-		$this->dbhost = 'localhost';
+		$this->dbhost = 'ubuntu';
 		$this->dbport = '3306';
 		$this->dbname = 'pmis';
-		$this->dbuser = 'root';
-		$this->dbpass = 'sly';
+		$this->dbuser = 'pmis';
+		$this->dbpass = 'pm1s';
 		$this->version = '1.0';
 
 	}

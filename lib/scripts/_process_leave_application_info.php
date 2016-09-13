@@ -99,7 +99,7 @@
 		if(!$Authorization[2]){echo "0|".$_SESSION['user']."|ERROR 401:~Access denied!!!";exit();}
 		
 		$fLeave->checkDateRange($FrDth,$ToDth);
-		$fLeave->checkFilingDate($FlDth,$FrDth,$ToDth,$LeaveTypeID);
+		// $fLeave->checkFilingDate($FlDth,$FrDth,$ToDth,$LeaveTypeID);
 		
 		$lTypeName=$fLeave->GetLeaveName($LeaveTypeID);
 		$aBalance=$fLeave->AvailableLeaveCredit($EmpID,$LeaveTypeID,$LivAppIncDateFrYear);
