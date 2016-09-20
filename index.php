@@ -42,6 +42,7 @@
 		<link type="text/css" href="css/<?php echo $_SESSION['theme']; ?>/jquery-ui-1.8.15.custom.css" rel="stylesheet"/>
 		<link type="text/css" href="css/<?php echo $_SESSION['theme']; ?>/common.css" rel="stylesheet"/>
 		<link type="text/css" href="css/<?php echo $_SESSION['theme']; ?>/chromestyle.css" rel="stylesheet"/>
+		<link rel="icon" href="favicon.ico"/>
 
 		<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
 		<script type="text/javascript" src="js/jquery-ui-1.8.15.custom.min.js"></script>
