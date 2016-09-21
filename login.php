@@ -73,7 +73,37 @@
 				<link type="text/css" href="css/<?php echo $_SESSION['theme']; ?>/jquery-ui-1.8.15.custom.css" rel="stylesheet"/>
 				<link type="text/css" href="css/<?php echo $_SESSION['theme']; ?>/common.css" rel="stylesheet"/>
 				<link rel="icon" href="favicon.ico"/>
-
+				<style type="text/css">
+					
+					.signin-header {
+						width: 100%;
+						margin-top: 80px;
+						text-align: center;
+					}
+					
+					.signin-header * {
+						margin: 0;
+						padding: 0;
+					}
+					
+					.signin-header h1 {
+						width: 300px;						
+						margin-top: 10px;
+						margin-left: auto;
+						margin-right: auto;
+						font-size: 30px;
+						color: #0577cc;
+						border-bottom: 1px solid #b1eeff;
+						padding-bottom: 5px;
+					}
+					
+					.signin-header p {
+						margin-top: 20px;
+						font-size: 16px;
+						color: #55a0d7;
+					}
+				
+				</style>
 				<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
 				<script type="text/javascript" src="js/jquery-ui-1.8.15.custom.min.js"></script>
 				<script type="text/javascript" src="js/jscripts.js"></script>
@@ -91,6 +121,11 @@
 
 			<body>
 			<div id="main_box" style="height:650px;display:block;" class="ui-dialog-content ui-widget-content ui-corner-all">
+				<div class="signin-header">
+					<img src="img/logo.png">
+					<h1>PGLU Web PMIS</h1>
+					<p>Login using your ID</p>
+				</div>			
 				<div id="win_sign_in" title="Sign in" style="width:auto;height:auto;padding:5px 5px 0px 5px;" class="windows ui-dialog ui-widget ui-widget-content ui-corner-all">
 					<form id="form_login" action="login.php" method="post">
 					<div style="background:#E6EFFF;width:auto;margin-bottom:4px;" id="user_div" class="ui-widget ui-widget-content ui-corner-all">
@@ -130,6 +165,13 @@
 					if(($("#UserID").val()!=="")||($("#Password").val()!=="")){$("#sign_in_reset").button({disabled:false});$("#sign_in_submit").button({disabled:false});}
 					else{$("#sign_in_reset").button({disabled:true});$("#sign_in_submit").button({disabled:true});}
 					$("#UserID").focus();
+					
+					/*
+					* adjust height according to browser
+					*/
+					$('#main_box').css({"height": "650px","display":"block"});
+					// $('#main_box').css({"height": $(document).height()+"px"});
+					// console.log($(document).height()+"px");
 				
 				});
 				<?php if($Authenticate==true){echo "showMessage(\"$LoginMsg\");";} ?>
