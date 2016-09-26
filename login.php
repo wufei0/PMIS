@@ -102,6 +102,19 @@
 						font-size: 16px;
 						color: #55a0d7;
 					}
+					
+					.signin-footer {
+						position: absolute;
+						bottom: 10px;
+						left: 50%;
+					}
+					
+					.signin-footer p {
+						position: relative;
+						left: -50%;
+						text-align: center;
+						color: #74add7;
+					}
 				
 				</style>
 				<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
@@ -120,13 +133,13 @@
 			</head>
 
 			<body>
-			<div id="main_box" style="height:650px;display:block;" class="ui-dialog-content ui-widget-content ui-corner-all">
+			<div id="main_box" style="height:100%;display:block;border:none!important" class="ui-dialog-content ui-widget-content ui-corner-all">
 				<div class="signin-header">
 					<img src="img/logo.png">
 					<h1>PGLU Web PMIS</h1>
 					<p>Login using your ID</p>
 				</div>			
-				<div id="win_sign_in" title="Sign in" style="width:auto;height:auto;padding:5px 5px 0px 5px;" class="windows ui-dialog ui-widget ui-widget-content ui-corner-all">
+				<div id="win_sign_in" title="Sign in" style="position:relative;width:230px;height:auto;margin-top:285px;margin-left:auto;margin-right:auto;padding:5px 5px 0px 5px;" class="windows ui-dialog ui-widget ui-widget-content ui-corner-all">
 					<form id="form_login" action="login.php" method="post">
 					<div style="background:#E6EFFF;width:auto;margin-bottom:4px;" id="user_div" class="ui-widget ui-widget-content ui-corner-all">
 						<table style="border-spacing:0px;border:0px solid #6D84B4;width:225px;">
@@ -150,7 +163,9 @@
 							</tr>
 						</table>
 					</form>
-					
+				</div>
+				<div class="signin-footer">
+					<p>&copy; Copyright 2016 PGLU-MISD</p>
 				</div>
 			</div>
 			<div id="d_message" title="PMIS Message"></div>
@@ -169,9 +184,7 @@
 					/*
 					* adjust height according to browser
 					*/
-					$('#main_box').css({"height": "650px","display":"block"});
-					// $('#main_box').css({"height": $(document).height()+"px"});
-					// console.log($(document).height()+"px");
+					// $('#main_box').css({"height": $(document).height()-10+"px"});
 				
 				});
 				<?php if($Authenticate==true){echo "showMessage(\"$LoginMsg\");";} ?>
