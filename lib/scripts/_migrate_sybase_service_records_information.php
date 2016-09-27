@@ -166,8 +166,10 @@
 						$EmpSG=odbc_fetch_array($cur);
 						$Step=explode("/",$EmpSG['sg_step']);
 						
+						$salary_grade = (count($Step) == 1) ? "" : $Step[1];
+						
 						$SerRec=$MySQLi->GetArray("SELECT `SRecID` FROM `tblempservicerecords` WHERE `EmpID`='$EmpID' ORDER BY `SRecFromYear` DESC, `SRecFromMonth` DESC, `SRecFromDay` DESC LIMIT 1;");
-						$MySQLi->sqlQuery("UPDATE `tblempservicerecords` SET `SRecCurrentAppointment`='1', `SRecSalGradeStep`='".$Step[1]."' WHERE `EmpID`='$EmpID' AND `SRecID`='".$SerRec['SRecID']."' LIMIT 1;");
+						$MySQLi->sqlQuery("UPDATE `tblempservicerecords` SET `SRecCurrentAppointment`='1', `SRecSalGradeStep`='".$salary_grade."' WHERE `EmpID`='$EmpID' AND `SRecID`='".$SerRec['SRecID']."' LIMIT 1;");
 						$MySQLi->sqlQuery("UPDATE `tblempservicerecords` SET `SRecCurrentAppointment`='0' WHERE `EmpID`='$EmpID' AND `SRecID`<>'".$SerRec['SRecID']."';");
 					}
 					
