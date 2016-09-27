@@ -1,5 +1,7 @@
 <?php
 
+require_once '../../echo-txt.php';
+
 require_once $_SESSION['path'].'/lib/classes/MySQLClass.php';
 
 class Authentication{
@@ -69,11 +71,11 @@ class Authentication{
 		$MySQLi=new MySQLClass();
 		$sql="SELECT `tblsystemusergroups`.`UserGroupAccess` FROM `tblsystemusergroups` JOIN `tblemppersonalinfo` ON `tblsystemusergroups`.`UserGroupID` = `tblemppersonalinfo`.`UserGroupID` WHERE `tblemppersonalinfo`.`EmpID`='$UserID';";
 		if(!($records=$MySQLi->GetArray($sql))){return "-1|ERROR 401:~User ID not active.";}
-		else{
-			$Module=$MySQLi->GetArray("SELECT `ModuleIndex` FROM `tblsystemmodules` WHERE `ModuleID`='".$ModuleID."';");
-			$AccessCodes=explode(':',$records['UserGroupAccess']);
-			$ModuleAccessCode_x=$AccessCodes[intval($Module['ModuleIndex'])];
-			$ModuleAccessCode_b=$this->hex2bin_($ModuleAccessCode_x);
+		else{  // logger(print_r($records,true));
+			$Module=$MySQLi->GetArray("SELECT `ModuleIndex` FROM `tblsystemmodules` WHERE `ModuleID`='".$ModuleID."';"); // logger(print_r($Module,true));
+			$AccessCodes=explode(':',$records['UserGroupAccess']); // logger(print_r($AccessCodes,true));
+			$ModuleAccessCode_x=$AccessCodes[intval($Module['ModuleIndex'])]; // logger($ModuleAccessCode_x);
+			$ModuleAccessCode_b=$this->hex2bin_($ModuleAccessCode_x); // logger($ModuleAccessCode_b);
 			return $ModuleAccessCode_b;
 		}
 	}
