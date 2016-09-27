@@ -1,6 +1,6 @@
 <?php
 
-require_once '../../echo-txt.php';
+require_once $_SESSION['path'].'/echo-txt.php';
 
 require_once $_SESSION['path'].'/lib/classes/MySQLClass.php';
 
