@@ -3,7 +3,7 @@
 	session_start();
 	date_default_timezone_set('Asia/Taipei');
 		
-	
+	require_once $_SESSION['path'].'/echo-txt.php';		
 	
 	/* - - - - - - - - - -  A U T H E N T I C A T I O N - - - - - - - - - - */
 	require_once $_SESSION['path'].'/lib/classes/Authentication.php';$Authentication=new Authentication();$ActiveStatus=explode("|",$Authentication->isUserActive($_SESSION['user'],$_SESSION['fingerprint']));if($ActiveStatus[0]!=1){echo "-1|".$_SESSION['user']."|".$ActiveStatus[1];exit();}
@@ -74,6 +74,7 @@
 							$DpntLName=$MySQLi->RealEscapeString(strtoupper(trim($DpntInfo['dependent'])));
 							$DpntMName=$MySQLi->RealEscapeString(strtoupper(trim($DpntInfo['dependent'])));
 							$DpntFName=$MySQLi->RealEscapeString(strtoupper(trim($DpntInfo['dependent'])));
+							$DpntExtName="";
 							$DpntBirthDay="";
 							$DpntBirthMonth="";
 							$DpntBirthYear="";
