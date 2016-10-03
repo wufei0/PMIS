@@ -310,3 +310,19 @@ function AddIDtoList(selectbox,text,value){
 	selectbox.options.add(optn);
 	lst.value=lst.value+","+value;
 }
+
+function gotoPage(opt,radio) {
+
+	/*
+	** remove active state
+	*/
+	var radios = ['r_emp_info_menu_1_leav','r_emp_info_menu_1_pdtr'];
+	radios.forEach(function(radio,index) { $('#'+radio + '+label').removeClass('ui-state-active'); });
+
+	$("#e_menu_2").show("drop");
+	$("#e_menu_1").hide();
+	
+	getEmpPage(opt,eid,mode);
+	$('#'+radio + '+label').addClass('ui-state-active');
+	
+}

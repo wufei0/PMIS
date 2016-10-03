@@ -1,0 +1,6 @@
+#fl_menu{position:absolute; top:25%; right:3px; z-index:9999; width:150px; height:50px;}
+#fl_menu .label{padding-left:20px; line-height:50px; font-family:"Arial Black", Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; background:#e54949; color:#fff; letter-spacing:7px;}
+#fl_menu .menu{display:none;}
+#fl_menu .menu .menu_item{display:block; background:#e54949; color:#fff; border-top:1px solid #d14242; padding:10px 20px; font-family:Arial, Helvetica, sans-serif; font-size:12px; text-decoration:none;}
+#fl_menu .menu a.menu_item:hover{background:#a83434; color:#fff;}
+.content{width:520px; margin:50px auto;}

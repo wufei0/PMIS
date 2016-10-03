@@ -42,10 +42,12 @@
 		<link type="text/css" href="css/<?php echo $_SESSION['theme']; ?>/jquery-ui-1.8.15.custom.css" rel="stylesheet"/>
 		<link type="text/css" href="css/<?php echo $_SESSION['theme']; ?>/common.css" rel="stylesheet"/>
 		<link type="text/css" href="css/<?php echo $_SESSION['theme']; ?>/chromestyle.css" rel="stylesheet"/>
+		<link type="text/css" href="css/shortcut-menu.css" rel="stylesheet"/>
 		<link rel="icon" href="favicon.ico"/>
 
 		<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
 		<script type="text/javascript" src="js/jquery-ui-1.8.15.custom.min.js"></script>
+		<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
 		<script type="text/javascript" src="js/jscripts.js"></script>
 		<script type="text/javascript" src="js/ajax.js"></script>
 		<script type="text/javascript" src="js/chrome.js">
@@ -109,7 +111,7 @@
 		<script type='text/javaScript'>
 		<?php if($ActiveStatus[0]!=1){echo "showMessage(\"$ActiveStatus[1]\");$('#d_message').dialog({close:function(event,ui){window.location.href=\"logout.php\";}});";} ?>
 		</script>
-
+		<?php include_once 'shortcut-menu.php'; ?>
 		<!-- Header and Logo -->
 		<div class='header'>
 			<div class='header_logo' title="Logo here later..."></div>
@@ -859,9 +861,51 @@
 			<table width='100%' height='100%'><tr valign='center'><td align='center'><img src="css/<?php echo $_SESSION['theme']; ?>/images/loader.gif"/><br/><span class="loading_text">Loading...</span></td></tr></table>
 		</div>
 						
-		<script type='text/javaScript'>
+		<script type="text/javaScript">
+		
+			//config
+			$float_speed=1500; //milliseconds
+			$float_easing="easeOutQuint";
+			$menu_fade_speed=500; //milliseconds
+			$closed_menu_opacity=0.75;
+
+			//cache vars
+			$fl_menu=$("#fl_menu");
+			$fl_menu_menu=$("#fl_menu .menu");
+			$fl_menu_label=$("#fl_menu .label");
+
+			$(window).load(function() {
+				menuPosition=$('#fl_menu').position().top;
+				FloatMenu();
+				$fl_menu.hover(
+					function(){ //mouse over
+						$fl_menu_label.fadeTo($menu_fade_speed, 1);
+						$fl_menu_menu.fadeIn($menu_fade_speed);
+					},
+					function(){ //mouse out
+						$fl_menu_label.fadeTo($menu_fade_speed, $closed_menu_opacity);
+						$fl_menu_menu.fadeOut($menu_fade_speed);
+					}
+				);
+			});
+
+			$(window).scroll(function () { 
+				FloatMenu();
+			});
+
+			function FloatMenu(){
+				var scrollAmount=$(document).scrollTop();
+				var newPosition=menuPosition+scrollAmount;
+				if($(window).height()<$fl_menu.height()+$fl_menu_menu.height()){
+					$fl_menu.css("top",menuPosition);
+				} else {
+					$fl_menu.stop().animate({top: newPosition}, $float_speed, $float_easing);
+				}
+			}		
+		
 			cssdropdown.startchrome("chromemenu");
 			Notifier('1');setInterval(function(){Notifier('1')},30000);
+			
 		</script>
 	</body>
 </html>
