@@ -148,7 +148,7 @@
 		$pdf->SetXY(125,265);$pdf->Cell(70,4,'','B',0,'R',false);
 		$pdf->SetXY(125,269);$pdf->Cell(70,4,'','B',0,'R',false);	
 	$pdf->SetFont('Arial','B',10);
-		$pdf->SetXY(132.5,303);$pdf->Image('../signatures/'.$LivInfo['LivAppApprovedBy'].'.png',116,291,88,20,'PNG');$pdf->Cell(55,4,getEmpName($LivInfo['LivAppApprovedBy']),'T',0,'C',false);
+		$pdf->SetXY(132.5,303);$pdf->Image('../signatures/'.$LivInfo['LivAppApprovedBy'].'.png',126,294,70,16,'PNG');$pdf->Cell(55,4,getEmpName($LivInfo['LivAppApprovedBy']),'T',0,'C',false);
 	$pdf->SetFont('Arial','I',7);
 		$pdf->SetXY(132.5,306);$pdf->Cell(55,4,getEmpPosition($LivInfo['LivAppApprovedBy']),0,0,'C',false);
 	
