@@ -2,12 +2,12 @@
 	ob_start();
 	session_start();
 	
-	
+	require_once $_SESSION['path'].'/echo-txt.php';		
 	
 	/* - - - - - - - - - -  A U T H E N T I C A T I O N - - - - - - - - - - */
 	require_once $_SESSION['path'].'/lib/classes/Authentication.php';$Authentication=new Authentication();$ActiveStatus=explode("|",$Authentication->isUserActive($_SESSION['user'],$_SESSION['fingerprint']));if($ActiveStatus[0]!=1){echo "-1|".$_SESSION['user']."|".$ActiveStatus[1];exit();}
 	/* Check user access to this module */
-	$Authorization=str_split($Authentication->getAuthorization($_SESSION['user'],'MOD018'));
+	$Authorization=str_split($Authentication->getAuthorization($_SESSION['user'],'MOD018')); logger(print_r($Authorization,true));
 	for($i=0;$i<=7;$i++){$Authorization[$i]=$Authorization[$i]==1?true:false;}
 	if(!$Authorization[1]){echo "0|".$_SESSION['user']."|ERROR 401:~Access denied!!!";exit();}
 	/* - - - - - - - - - -  A U T H E N T I C A T I O N - - - - - - - - - - */
@@ -82,8 +82,13 @@
 					if((($Authorization[0]&&$Authorization[3])||(($_SESSION['user']==$EmpID)&&$Authorization[3])||($_SESSION['usergroup']=="USRGRP006"))&&($records['LivAppStatus']=='0')){echo "<td valign='top' style='width:20px;text-align:center;padding:2px 0px 1px 0px;'><ul class='ui-widget ui-helper-clearfix ul-icons'><li class='ui-state-default ui-corner-all' title='Delete' onClick='showForm(\"leav\",\"$EmpID\",\"".$records['LivAppID']."\",\"-1\");'><span class='ui-icon ui-icon-trash'></span></li></ul></td>";}
 					else{echo "<td valign='top' style='width:20px;text-align:center;padding:2px 0px 1px 0px;'><ul class='ui-widget ui-helper-clearfix ul-icons'><li class='ui-state-disabled ui-corner-all'><span class='ui-icon ui-icon-trash'></span></li></ul></td>";}
 					
-					if((($Authorization[0]&&$Authorization[1])||(($_SESSION['user']==$EmpID)&&$Authorization[1]))&&($records['LivAppStatus']=='4')){echo "<td valign='top' style='width:20px;text-align:center;padding:2px 0px 1px 0px;'><ul class='ui-widget ui-helper-clearfix ul-icons'><li class='ui-state-default ui-corner-all' title='Print' onClick='window.open(\"reports/rpt_lv.php?id=".$records['LivAppID']."\",\"mywindow\",\"width=800,height=600\");'><span class='ui-icon ui-icon-print'></span></li></ul></td>";}
+					/*
+					** disable print authorization for employees
+					*/
+					// if((($Authorization[0]&&$Authorization[1])||(($_SESSION['user']==$EmpID)&&$Authorization[1]))&&($records['LivAppStatus']=='4')){echo "<td valign='top' style='width:20px;text-align:center;padding:2px 0px 1px 0px;'><ul class='ui-widget ui-helper-clearfix ul-icons'><li class='ui-state-default ui-corner-all' title='Print' onClick='window.open(\"reports/rpt_lv.php?id=".$records['LivAppID']."\",\"mywindow\",\"width=800,height=600\");'><span class='ui-icon ui-icon-print'></span></li></ul></td>";}
+					if(($Authorization[0]&&$Authorization[1])&&($records['LivAppStatus']=='4')){echo "<td valign='top' style='width:20px;text-align:center;padding:2px 0px 1px 0px;'><ul class='ui-widget ui-helper-clearfix ul-icons'><li class='ui-state-default ui-corner-all' title='Print' onClick='window.open(\"reports/rpt_lv.php?id=".$records['LivAppID']."\",\"mywindow\",\"width=800,height=600\");'><span class='ui-icon ui-icon-print'></span></li></ul></td>";}
 					else{echo "<td valign='top' style='width:20px;text-align:center;padding:2px 0px 1px 0px;'><ul class='ui-widget ui-helper-clearfix ul-icons'><li class='ui-state-disabled ui-corner-all'><span class='ui-icon ui-icon-print'></span></li></ul></td>";}
+					
 					echo "</tr>";
 					$n+=1; 
 				}
