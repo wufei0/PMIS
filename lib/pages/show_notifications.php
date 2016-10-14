@@ -2,8 +2,6 @@
 	ob_start();
 	session_start();
 	
-	
-	
 	/* - - - - - - - - - -  A U T H E N T I C A T I O N - - - - - - - - - - */
 	require_once $_SESSION['path'].'/lib/classes/Authentication.php';$Authentication=new Authentication();$ActiveStatus=explode("|",$Authentication->isUserActive($_SESSION['user'],$_SESSION['fingerprint']));if($ActiveStatus[0]!=1){echo "-1|".$_SESSION['user']."|".$ActiveStatus[1];exit();}
 	/* Check user access to this module */
@@ -30,6 +28,7 @@
 	$TIMESTAMP=date('Y-m-d H:i:s');
 	
 	$Notify=false;$NotifVal=-1;
+	$leaveAppStatus = true;
 	if($LeaveAuth[5]||$LeaveAuth[6]||$LeaveAuth[7]||$TravAuth[5]||$TravAuth[6]|$TravAuth[7]||$COCAuth[5]||$COCAuth[6]|$COCAuth[7]){
 		$MySQLi=new MySQLClass();
 		$Personnel=new PersonnelFunctions();

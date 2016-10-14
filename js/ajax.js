@@ -1,5 +1,6 @@
 /* SEARCH Employee load to emp_search_result */
 function ajaxSearchEmp(opt,key){
+	if ($('#searchPanel')[0]) {
 	$(function(){
 		$.ajax({
 			url:"lib/scripts/_employee_search.php",
@@ -19,6 +20,7 @@ function ajaxSearchEmp(opt,key){
 			}
 		});
 	});
+	}
 }
 
 /* SEARCH Office load to off_search_result */

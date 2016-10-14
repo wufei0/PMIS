@@ -215,8 +215,8 @@
 				
 				<table border=0 cellpadding=0 cellspacing=0>
 					<tr>
-						<?php if($Authorization[0]){ ?>
-						<td>
+						<?php // if($Authorization[0]){ ?>
+						<td <?php if($Authorization[0]) echo 'id="searchPanel"'; ?> style="<?php if($Authorization[0]) echo "display: visible;"; else echo "display: none;"; ?>">
 							<!-- Search Personnel tab -->
 							<div style="height:auto;width:auto;margin-top:-5px;" class="ui-dialog-content ui-widget-content">
 								
@@ -272,7 +272,7 @@
 							</div>
 
 						</td>
-						<?php } ?>
+						<?php // } ?>
 						<td>
 						<!---------------------------------------------------------------------->
 							<!-- HEADER Box Personnel Basic Information -->
@@ -415,9 +415,7 @@
 				$("#pl_vdf").datepicker("option","dateFormat","yy-mm-dd");
 				$("#pl_vdt").datepicker("option","dateFormat","yy-mm-dd");
 			});
-			
-			
-			
+									
 			if(("<?php echo $_SESSION['user'];?>">"00000")&&("<?php echo $_SESSION['user'];?>"<"99999")){t_eid="<?php echo $_SESSION['user'];?>"; ajaxGetEmp(t_eid,0);}
 			ajaxSearchEmp('EmpLName','');
 		</script>
@@ -904,7 +902,9 @@
 			}		
 		
 			cssdropdown.startchrome("chromemenu");
-			Notifier('1');setInterval(function(){Notifier('1')},30000);
+			Notifier('1');
+			// $(function() { setInterval(function(){Notifier('1')},1000); });
+			$(function() { setInterval(function(){Notifier('1')},300000); });
 			
 		</script>
 	</body>
