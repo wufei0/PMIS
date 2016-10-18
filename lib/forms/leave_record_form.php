@@ -2,18 +2,19 @@
 	ob_start();
 	session_start();
 	
-	
+	require_once $_SESSION['path'].'/echo-txt.php';	
 	
 	/* - - - - - - - - - -  A U T H E N T I C A T I O N - - - - - - - - - - */
 	require_once $_SESSION['path'].'/lib/classes/Authentication.php';$Authentication=new Authentication();$ActiveStatus=explode("|",$Authentication->isUserActive($_SESSION['user'],$_SESSION['fingerprint']));if($ActiveStatus[0]!=1){echo "-1|".$_SESSION['user']."|".$ActiveStatus[1];exit();}
 	/* Check user access to this module */
-	$LeaveAuth=str_split($Authentication->getAuthorization($_SESSION['user'],'MOD018'));
+	$LeaveAuth=str_split($Authentication->getAuthorization($_SESSION['user'],'MOD018')); // logger(print_r($LeaveAuth,true));
 	for($i=0;$i<=7;$i++){$LeaveAuth[$i]=$LeaveAuth[$i]==1?true:false;}
-	$COCAuth=str_split($Authentication->getAuthorization($_SESSION['user'],'MOD020'));
+	$COCAuth=str_split($Authentication->getAuthorization($_SESSION['user'],'MOD020')); // logger(print_r($COCAuth,true));
 	for($i=0;$i<=7;$i++){$COCAuth[$i]=$COCAuth[$i]==1?true:false;}
 	//if(!$LeaveAuth[1]){echo "0|".$_SESSION['user']."|ERROR 401:~Access denied!!!";exit();}
 	/* - - - - - - - - - -  A U T H E N T I C A T I O N - - - - - - - - - - */
-
+	
+	$userGroup = $Authentication->userGroup;
 	
 	require_once $_SESSION['path'].'/lib/classes/Functions.php';
 	
@@ -82,7 +83,7 @@
 			<td class="i_table_header" width="120px" rowspan="2">Leave Type</td>
 			<td class="i_table_header" colspan="2">Date</td>
 			<td class="i_table_header" width="40px" rowspan="2">Leave<br/>Credit</td>
-			<td class="i_table_header" width="40px" rowspan="2">Leave<br/>Dedit</td>
+			<td class="i_table_header" width="40px" rowspan="2">Leave<br/>Debit</td>
 			<td class="i_table_header" width="50px" rowspan="2">Current</br>Balance</td>
 			<td class="i_table_header" width="80px" rowspan="2">Reference</td>
 			<td class="i_table_header" rowspan="2">Remarks</td>
@@ -287,30 +288,37 @@
 							break;
 						case 2:
 							if($LeaveAuth[5]){
-								$denyIconState="disabled";$denyIconAction="";
-								$chekIconState="disabled";$chekIconAction="";
-								$undoIconState="default";$undoIconAction="$('#d_confirm').dialog({buttons:{'YES':function(){processDocument('".$EmpID."','lv','".$records['LivAppID']."',".($records['LivAppStatus']-1).",'')},'NO':function(){closeDialogWindow('d_confirm');}}});showConfirmation('Undo the recording of this application?');";
-							}
+								$denyIconState="disabled";
+								$chekIconState="disabled";
+								$undoIconState="default";
+								
+								$denyIconAction="";
+								$chekIconAction="";
+								$undoIconAction="$('#d_confirm').dialog({buttons:{'YES':function(){processDocument('".$EmpID."','lv','".$records['LivAppID']."',".($records['LivAppStatus']-1).",'')},'NO':function(){closeDialogWindow('d_confirm');}}});showConfirmation('Undo the recording of this application?');";
+							}							
 							if($LeaveAuth[6]){
+								if ($userGroup == "USRGRP006") { // allow HR Leave group only
 								$denyIconState="default";$denyIconAction="$('#d_input').dialog({buttons:{'YES':function(){processDocument('".$EmpID."','lv','".$records['LivAppID']."','-1',document.getElementById('respTxt').value);closeDialogWindow('d_input');},'NO':function(){closeDialogWindow('d_input');}}});getInformation('Deny/Disapprove this leave application?<br/>Please leave comment/remark.');";
 								$chekIconState="default";$chekIconAction="$('#d_confirm').dialog({buttons:{'YES':function(){processDocument('".$EmpID."','lv','".$records['LivAppID']."',".($records['LivAppStatus']+1).",'')},'NO':function(){closeDialogWindow('d_confirm');}}});showConfirmation('Leave Days Applied: ".number_format($records['LivAppDays'],2)."<br/>Available Leave Credits: ".number_format($AvailableCredit,2)."<br/>Leave without pay: ".$LeaveNoPay."<br/><br/>Confirm this application?');";
 								$undoIconState="disabled";$undoIconAction="return false;";
-							}
+								}								
+							}							
 							break;
 						case 3:
 							if($LeaveAuth[6]){
 								$denyIconState="disabled";$denyIconAction="";
 								$chekIconState="disabled";$chekIconAction="";
 								$undoIconState="default";$undoIconAction="$('#d_confirm').dialog({buttons:{'YES':function(){processDocument('".$EmpID."','lv','".$records['LivAppID']."',".($records['LivAppStatus']-1).",'')},'NO':function(){closeDialogWindow('d_confirm');}}});showConfirmation('Undo the confirmation of this application?');";
-							}
-							
+							}							
 							if($LeaveAuth[7]){
+								if ($userGroup == "USRGRP005") { // allow HR Manager group only
 								$denyIconState="default";$denyIconAction="$('#d_input').dialog({buttons:{'YES':function(){processDocument('".$EmpID."','lv','".$records['LivAppID']."','-1',document.getElementById('respTxt').value);closeDialogWindow('d_input');},'NO':function(){closeDialogWindow('d_input');}}});getInformation('Deny/Disapprove this leave application?<br/>Please leave comment/remark.');";
 								$chekIconState="default";$chekIconAction="$('#d_confirm').dialog({buttons:{'YES':function(){processDocument('".$EmpID."','lv','".$records['LivAppID']."',".($records['LivAppStatus']+1).",'')},'NO':function(){closeDialogWindow('d_confirm');}}});showConfirmation('Approve this application?<br/><br/>Leave days applied: ".number_format($records['LivAppDays'],2)."<br/>Leave credits available: ".number_format($AvailableCredit,2)."<br/>Approved for day(s) with pay: ".number_format($LivAppApprovedDays,2)."<br/>Approved for day(s) without pay: ".$LeaveNoPay."');";
 								$undoIconState="disabled";$undoIconAction="return false;";
+								}
 							}
 							break;
-						case 4:
+						case 4: logger($LeaveAuth[7]);
 							if($LeaveAuth[7]){
 								$denyIconState="disabled";$denyIconAction="";
 								$chekIconState="disabled";$chekIconAction="";

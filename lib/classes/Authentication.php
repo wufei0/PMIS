@@ -7,6 +7,7 @@ require_once $_SESSION['path'].'/lib/classes/MySQLClass.php';
 class Authentication{
 	
 	var $OnlineTimeLimit=1800;	/* Set User Inactivity Time Limit */
+	var $userGroup;
 	
 	public function Authenticate($UserID,$Password,$RemoteIP,$RemoteHost,$RemoteMacAdd,$FingerPrint){
 		$MySQLi=new MySQLClass();
@@ -69,9 +70,10 @@ class Authentication{
 	
 	public function getAuthorization($UserID,$ModuleID){
 		$MySQLi=new MySQLClass();
-		$sql="SELECT `tblsystemusergroups`.`UserGroupAccess` FROM `tblsystemusergroups` JOIN `tblemppersonalinfo` ON `tblsystemusergroups`.`UserGroupID` = `tblemppersonalinfo`.`UserGroupID` WHERE `tblemppersonalinfo`.`EmpID`='$UserID';";
+		$sql="SELECT `tblsystemusergroups`.`UserGroupAccess`, `tblemppersonalinfo`.`UserGroupID` FROM `tblsystemusergroups` JOIN `tblemppersonalinfo` ON `tblsystemusergroups`.`UserGroupID` = `tblemppersonalinfo`.`UserGroupID` WHERE `tblemppersonalinfo`.`EmpID`='$UserID';";
 		if(!($records=$MySQLi->GetArray($sql))){return "-1|ERROR 401:~User ID not active.";}
 		else{  // logger(print_r($records,true));
+			$this->userGroup = $records['UserGroupID'];
 			$Module=$MySQLi->GetArray("SELECT `ModuleIndex` FROM `tblsystemmodules` WHERE `ModuleID`='".$ModuleID."';"); // logger(print_r($Module,true));
 			$AccessCodes=explode(':',$records['UserGroupAccess']); // logger(print_r($AccessCodes,true));
 			$ModuleAccessCode_x=$AccessCodes[intval($Module['ModuleIndex'])]; // logger($ModuleAccessCode_x);
