@@ -402,16 +402,22 @@ function processForm(opt,form){
 				else if((fields[0]=="0") || (fields[0]==0)){showMessage(fields[2]);}
 				else if((fields[0]=="1") || (fields[0]==1)){
 					showMessage(fields[2]);
-					$('#d_form_input').dialog('close');
+ 					$('#d_form_input').dialog('close');
 					$('#d_message').dialog({close:function(event,ui){
-						if (typeof form.EmpName != 'undefined'){
-							showPendingDocuments("vliv",LeaveTypeID.value,form.LivAppIncDateFrYear.value,form.LivAppIncDateFrMonth.value,'X');
-							viewRecordPLCT(form.EmpID.value,'L');
-						}
-						else {
-							if(opt=="newp"){t_eid=fields[1];}
-							else if(opt=="chst"){ajaxSearchEmp(document.getElementById('pds_search_cat').value, document.getElementById('pds_search_key').value);}
-							ajaxGetEmp(fields[1],0);
+						
+						if (opt=="leav") {
+							gotoPage('leav','r_emp_info_menu_1_leav');
+						} else {
+						
+							if (typeof form.EmpName != 'undefined'){
+								showPendingDocuments("vliv",LeaveTypeID.value,form.LivAppIncDateFrYear.value,form.LivAppIncDateFrMonth.value,'X');
+								viewRecordPLCT(form.EmpID.value,'L');
+							} else {
+								if(opt=="newp"){t_eid=fields[1];}
+								else if(opt=="chst"){ajaxSearchEmp(document.getElementById('pds_search_cat').value, document.getElementById('pds_search_key').value);}
+								ajaxGetEmp(fields[1],0);
+							}
+						
 						}
 						
 					}});

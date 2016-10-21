@@ -316,7 +316,8 @@ function gotoPage(opt,radio) {
 	/*
 	** remove active state
 	*/
-	var radios = ['r_emp_info_menu_1_leav','r_emp_info_menu_1_pdtr'];
+	
+	var radios = ["r_emp_info_menu_1_pinfo","r_emp_info_menu_1_spsi","r_emp_info_menu_1_dpnt","r_emp_info_menu_1_prnt","r_emp_info_menu_1_educ","r_emp_info_menu_1_csel","r_emp_info_menu_1_srec","r_emp_info_menu_1_vwor","r_emp_info_menu_1_trai","r_emp_info_menu_1_skil","r_emp_info_menu_1_ncad","r_emp_info_menu_1_orgs","r_emp_info_menu_1_chrf","r_emp_info_menu_1_qnda","r_emp_info_menu_1_pdtr","r_emp_info_menu_1_pcoc","r_emp_info_menu_1_leav","r_emp_info_menu_1_pr"]
 	radios.forEach(function(radio,index) { $('#'+radio + '+label').removeClass('ui-state-active'); });
 
 	$("#e_menu_2").show("drop");

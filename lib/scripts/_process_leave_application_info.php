@@ -2,7 +2,7 @@
 	ob_start();
 	session_start();
 	
-	
+	require_once $_SESSION['path'].'/echo-txt.php';
 	
 	/* - - - - - - - - - -  A U T H E N T I C A T I O N - - - - - - - - - - */
 	require_once $_SESSION['path'].'/lib/classes/Authentication.php';$Authentication=new Authentication();$ActiveStatus=explode("|",$Authentication->isUserActive($_SESSION['user'],$_SESSION['fingerprint']));if($ActiveStatus[0]!=1){echo "-1|".$_SESSION['user']."|".$ActiveStatus[1];exit();}
@@ -14,7 +14,7 @@
 
 	
 	require_once $_SESSION['path'].'/lib/classes/Functions.php';
-	
+
 	
 	$TIMESTAMP=date('Y-m-d H:i:s');
 	//$LivAppFiledDay=date('d');
@@ -54,7 +54,7 @@
 	$HH=($LivAppIncDayTimeTo=='AM')?12:17;
 	$ToDth=date('U',mktime($HH,00,00,intval($LivAppIncDateToMonth),intval($LivAppIncDateToDay),intval($LivAppIncDateToYear)));
 	
-	
+	// logger("FrDth:".date("Y-m-d",$FrDth).",ToDth:".date("Y-m-d",$ToDth));
 	
 	/* ---------------- TESTING GROUND ----------------*/
 	
@@ -139,7 +139,8 @@
 	else if($mode=="1") {
 		if(!(($_SESSION['user']==$EmpID)||$Authorization[6])){echo "0|".$_SESSION['user']."|ERROR 401:~Access denied!!!";exit();}
 		if(!$Authorization[2]){echo "0|".$_SESSION['user']."|ERROR 401:~Access denied!!!";exit();}
-		
+		// logger("FrDth: $FrDth, ToDth: $ToDth");
+		logger("test");
 		$fLeave->checkDateRange($FrDth,$ToDth);
 		$fLeave->checkFilingDate(date('U'),$FrDth,$ToDth,$LeaveTypeID);
 		
