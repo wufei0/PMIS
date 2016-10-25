@@ -2,34 +2,35 @@
 	ob_start();
 	session_start();
 	
+	require_once $_SESSION['path'].'/echo-txt.php';	
+	
 	/* - - - - - - - - - -  A U T H E N T I C A T I O N - - - - - - - - - - */
 	require_once $_SESSION['path'].'/lib/classes/Authentication.php';$Authentication=new Authentication();$ActiveStatus=explode("|",$Authentication->isUserActive($_SESSION['user'],$_SESSION['fingerprint']));if($ActiveStatus[0]!=1){echo "-1|".$_SESSION['user']."|".$ActiveStatus[1];exit();}
 	/* Check user access to this module */
-	$LeaveAuth=str_split($Authentication->getAuthorization($_SESSION['user'],'MOD018'));
+	$LeaveAuth=str_split($Authentication->getAuthorization($_SESSION['user'],'MOD018')); logger(print_r($LeaveAuth,true));
 	for($i=0;$i<=7;$i++){$LeaveAuth[$i]=$LeaveAuth[$i]==1?true:false;}
 	$COCAuth=str_split($Authentication->getAuthorization($_SESSION['user'],'MOD020'));
 	for($i=0;$i<=7;$i++){$COCAuth[$i]=$COCAuth[$i]==1?true:false;}
 	$TravAuth=str_split($Authentication->getAuthorization($_SESSION['user'],'MOD019'));
 	for($i=0;$i<=7;$i++){$TravAuth[$i]=$TravAuth[$i]==1?true:false;}
 	/* - - - - - - - - - -  A U T H E N T I C A T I O N - - - - - - - - - - */
-	
-	
+
+
 	require_once $_SESSION['path'].'/lib/classes/Functions.php';
-	
-	
+
+
 	function StatusToString($st){
 		switch ($st){case '0':return "NEW";break;case '1':return "POSTED";break;case '2':return "FILED";break;case '3':return "CONFIRMED";break;case '4':return "APPROVED";break;default: return "DISAPPROVED";break;}
 	}
-	
-	
-	
+
+
 	$getNotificationOnly=isset($_POST['gn'])?strtoupper(strip_tags(trim($_POST['gn']))):'0';
 	$getNotificationOnly=$getNotificationOnly=='1'?true:false;
 	$TIMESTAMP=date('Y-m-d H:i:s');
 	
 	$Notify=false;$NotifVal=-1;
 	$leaveAppStatus = true;
-	if($LeaveAuth[5]||$LeaveAuth[6]||$LeaveAuth[7]||$TravAuth[5]||$TravAuth[6]|$TravAuth[7]||$COCAuth[5]||$COCAuth[6]|$COCAuth[7]){
+	if($LeaveAuth[4]||$LeaveAuth[5]||$LeaveAuth[6]||$LeaveAuth[7]||$TravAuth[5]||$TravAuth[6]|$TravAuth[7]||$COCAuth[5]||$COCAuth[6]|$COCAuth[7]){
 		$MySQLi=new MySQLClass();
 		$Personnel=new PersonnelFunctions();
 		if(!$getNotificationOnly){echo "1|".$_SESSION['user']."|<div style='width:auto;height:auto;overflow:hidden;'>";}
@@ -62,7 +63,8 @@
 				while($records=mysqli_fetch_array($result, MYSQLI_BOTH)){
 					$EmpID=$records['EmpID'];
 					switch ($records['LivAppStatus']){case '0':$leavestatus="NEW";break;case '1':$leavestatus="POSTED";break;case '2':$leavestatus="NOTED";break;case '3':$leavestatus="CHECKED";break;case '4':$leavestatus="APPROVED";break;default: $leavestatus="DISAPPROVED";break;}
-					$LeaveDesc="<b>".$records['LeaveTypeDesc']."</b> Application of <b>".$Personnel->getEmpName($records['EmpID'])."</b>. From <b>".$records['LivAppIncDateFrom']." ".$records['LivAppIncDayTimeFrom']."</b> to <b>".$records['LivAppIncDateTo']." ".$records['LivAppIncDayTimeTo']."</b>, <b>".number_format($records['LivAppDays'],2)."</b> ";
+					$LeaveDesc="<strong>$leavestatus</strong><br>";
+					$LeaveDesc.="<b>".$records['LeaveTypeDesc']."</b> Application of <b>".$Personnel->getEmpName($records['EmpID'])."</b>. From <b>".$records['LivAppIncDateFrom']." ".$records['LivAppIncDayTimeFrom']."</b> to <b>".$records['LivAppIncDateTo']." ".$records['LivAppIncDayTimeTo']."</b>, <b>".number_format($records['LivAppDays'],2)."</b> ";
 					$LeaveDesc.=($records['LivAppDays']>1)?" days.":" day.";
 						
 				?>
@@ -74,6 +76,7 @@
 		
 		if($LeaveAuth[6]){
 			$sql="SELECT `tblempleaveapplications`.`EmpID`, `tblempleaveapplications`.`LivAppID`, `tblempleaveapplications`.`LeaveTypeID`, `tblempleaveapplications`.`LivAppDays`,DATE_FORMAT(`tblempleaveapplications`.`LivAppFiledDate`, '%Y-%m-%d') AS LivAppFiledDate,DATE_FORMAT(`tblempleaveapplications`.`LivAppIncDateFrom`, '%b %d, %Y') AS LivAppIncDateFrom,`tblempleaveapplications`.`LivAppIncDayTimeFrom`,DATE_FORMAT(`tblempleaveapplications`.`LivAppIncDateTo`, '%b %d, %Y') AS LivAppIncDateTo,`tblempleaveapplications`.`LivAppIncDayTimeTo`,`tblempleaveapplications`.`LivAppStatus`,`tblleavetypes`.`LeaveTypeDesc`, `tblempleaveapplications`.`RECORD_TIME` FROM `tblempleaveapplications` JOIN `tblleavetypes` ON `tblempleaveapplications`.`LeaveTypeID`=`tblleavetypes`.`LeaveTypeID` WHERE (`tblempleaveapplications`.`LivAppStatus`='2') AND (`tblempleaveapplications`.`LeaveTypeID`!='LT08') ORDER BY `LivAppFiledDate` DESC;";
+			$sql_approved_leaves="SELECT `tblempleaveapplications`.`EmpID`, `tblempleaveapplications`.`LivAppID`, `tblempleaveapplications`.`LeaveTypeID`, `tblempleaveapplications`.`LivAppDays`,DATE_FORMAT(`tblempleaveapplications`.`LivAppFiledDate`, '%Y-%m-%d') AS LivAppFiledDate,DATE_FORMAT(`tblempleaveapplications`.`LivAppIncDateFrom`, '%b %d, %Y') AS LivAppIncDateFrom,`tblempleaveapplications`.`LivAppIncDayTimeFrom`,DATE_FORMAT(`tblempleaveapplications`.`LivAppIncDateTo`, '%b %d, %Y') AS LivAppIncDateTo,`tblempleaveapplications`.`LivAppIncDayTimeTo`,`tblempleaveapplications`.`LivAppStatus`,`tblleavetypes`.`LeaveTypeDesc`, `tblempleaveapplications`.`RECORD_TIME` FROM `tblempleaveapplications` JOIN `tblleavetypes` ON `tblempleaveapplications`.`LeaveTypeID`=`tblleavetypes`.`LeaveTypeID` WHERE (`tblempleaveapplications`.`LivAppStatus`='4') AND (`tblempleaveapplications`.`LeaveTypeID`!='LT08') AND (SELECT COUNT(tbldisleavenotif.LivAppID) FROM tbldisleavenotif WHERE tbldisleavenotif.notifiedEmp = 'hr' AND tbldisleavenotif.LivAppID = tblempleaveapplications.LivAppID) = 0 ORDER BY `LivAppFiledDate` DESC";
 			
 			if($getNotificationOnly){
 				if($MySQLi->NumberOfRows($sql)>0){
@@ -81,20 +84,48 @@
 					$records=$MySQLi->GetArray($sql);
 					if(strtotime($records['RECORD_TIME'])>(strtotime($TIMESTAMP)-30)){$NotifVal=1;}
 				}
+				
+				/*
+				**	Approved Leaves
+				*/
+				if($MySQLi->NumberOfRows($sql_approved_leaves)>0){
+					$Notify=true;
+					$records=$MySQLi->GetArray($sql_approved_leaves);
+					if(strtotime($records['RECORD_TIME'])>(strtotime($TIMESTAMP)-30)){$NotifVal=1;}
+				}				
 			}
 			else{
 				$result=$MySQLi->sqlQuery($sql);
 				while($records=mysqli_fetch_array($result, MYSQLI_BOTH)){
 					$EmpID=$records['EmpID'];
 					switch ($records['LivAppStatus']){case '0':$leavestatus="NEW";break;case '1':$leavestatus="POSTED";break;case '2':$leavestatus="NOTED";break;case '3':$leavestatus="CHECKED";break;case '4':$leavestatus="APPROVED";break;default: $leavestatus="DISAPPROVED";break;}
-					$LeaveDesc="<b>".$records['LeaveTypeDesc']."</b> Application of <b>".$Personnel->getEmpName($records['EmpID'])."</b>. From <b>".$records['LivAppIncDateFrom']." ".$records['LivAppIncDayTimeFrom']."</b> to <b>".$records['LivAppIncDateTo']." ".$records['LivAppIncDayTimeTo']."</b>, <b>".number_format($records['LivAppDays'],2)."</b> ";
+					$LeaveDesc="<strong>$leavestatus</strong><br>";
+					$LeaveDesc.="<b>".$records['LeaveTypeDesc']."</b> Application of <b>".$Personnel->getEmpName($records['EmpID'])."</b>. From <b>".$records['LivAppIncDateFrom']." ".$records['LivAppIncDayTimeFrom']."</b> to <b>".$records['LivAppIncDateTo']." ".$records['LivAppIncDayTimeTo']."</b>, <b>".number_format($records['LivAppDays'],2)."</b> ";
 					$LeaveDesc.=($records['LivAppDays']>1)?" days.":" day.";
 						
 				?>
 					<a href="#" class="notification_item" onClick="viewRecordPLCT('<?= $EmpID; ?>','L'); showNotifications(); return false;"><table class="ui-widget-content ui-corner-all" style="width:280px;padding:0px;border-spacing:0px;margin:3px 0px 0px 0px;"><tr valign="center"><td width="20px" align="center"><span class='ui-icon ui-icon-calendar'></span></td><td><?php echo $LeaveDesc; ?></td></tr></table></a>
 				<?php
 				}
-			}
+				
+				/*
+				**	Approved Leaves
+				*/
+				$result=$MySQLi->sqlQuery($sql_approved_leaves);
+				while($records=mysqli_fetch_array($result, MYSQLI_BOTH)){
+					$EmpID=$records['EmpID'];
+					switch ($records['LivAppStatus']){case '0':$leavestatus="NEW";break;case '1':$leavestatus="POSTED";break;case '2':$leavestatus="NOTED";break;case '3':$leavestatus="CHECKED";break;case '4':$leavestatus="APPROVED";break;default: $leavestatus="DISAPPROVED";break;}
+					$LeaveDesc="<strong>$leavestatus</strong><br>";
+					$LeaveDesc.="<b>".$records['LeaveTypeDesc']."</b> Application of <b>".$Personnel->getEmpName($records['EmpID'])."</b>. From <b>".$records['LivAppIncDateFrom']." ".$records['LivAppIncDayTimeFrom']."</b> to <b>".$records['LivAppIncDateTo']." ".$records['LivAppIncDayTimeTo']."</b>, <b>".number_format($records['LivAppDays'],2)."</b> ";
+					$LeaveDesc.=($records['LivAppDays']>1)?" days.":" day.";
+						
+				?>
+					<p style="position: relative; margin-top: 12px;"><a href="javascript: disAppNotif('hr','<?php echo $records['LivAppID']; ?>');" style="position:absolute; top:-13px; right:0;"><span class="ui-icon ui-icon-close"></span></a></p>
+					<a href="#" class="notification_item" onClick="viewLeavePdf('<?php echo $records['LivAppID']; ?>');"><table class="ui-widget-content ui-corner-all" style="width:280px;padding:0px;border-spacing:0px;margin:3px 0px 0px 0px;"><tr valign="center"><td width="20px" align="center"><span class='ui-icon ui-icon-calendar'></span></td><td><?php echo $LeaveDesc; ?></td></tr></table></a>
+				<?php
+				}		
+			}			
+			
 		}
 		
 		if($LeaveAuth[7]){
@@ -112,13 +143,41 @@
 				while($records=mysqli_fetch_array($result, MYSQLI_BOTH)){
 					$EmpID=$records['EmpID'];
 					switch ($records['LivAppStatus']){case '0':$leavestatus="NEW";break;case '1':$leavestatus="POSTED";break;case '2':$leavestatus="NOTED";break;case '3':$leavestatus="CHECKED";break;case '4':$leavestatus="APPROVED";break;default: $leavestatus="DISAPPROVED";break;}
-					$LeaveDesc="<b>".$records['LeaveTypeDesc']."</b> Application of <b>".$Personnel->getEmpName($records['EmpID'])."</b>. From <b>".$records['LivAppIncDateFrom']." ".$records['LivAppIncDayTimeFrom']."</b> to <b>".$records['LivAppIncDateTo']." ".$records['LivAppIncDayTimeTo']."</b>, <b>".number_format($records['LivAppDays'],2)."</b> ";
+					$LeaveDesc="<strong>$leavestatus</strong><br>";
+					$LeaveDesc.="<b>".$records['LeaveTypeDesc']."</b> Application of <b>".$Personnel->getEmpName($records['EmpID'])."</b>. From <b>".$records['LivAppIncDateFrom']." ".$records['LivAppIncDayTimeFrom']."</b> to <b>".$records['LivAppIncDateTo']." ".$records['LivAppIncDayTimeTo']."</b>, <b>".number_format($records['LivAppDays'],2)."</b> ";
 					$LeaveDesc.=($records['LivAppDays']>1)?" days.":" day.";
 						
 				?>
 					<a href="#" class="notification_item" onClick="viewRecordPLCT('<?= $EmpID; ?>','L'); showNotifications(); return false;"><table class="ui-widget-content ui-corner-all" style="width:280px;padding:0px;border-spacing:0px;margin:3px 0px 0px 0px;"><tr valign="center"><td width="20px" align="center"><span class='ui-icon ui-icon-calendar'></span></td><td><?php echo $LeaveDesc; ?></td></tr></table></a>
 				<?php
 				}
+			}
+		}
+		
+		/*
+		** Leave Applicant Notification		
+		*/
+		$sql_approved_leaves="SELECT `tblempleaveapplications`.`EmpID`, `tblempleaveapplications`.`LivAppID`, `tblempleaveapplications`.`LeaveTypeID`, `tblempleaveapplications`.`LivAppDays`,DATE_FORMAT(`tblempleaveapplications`.`LivAppFiledDate`, '%Y-%m-%d') AS LivAppFiledDate,DATE_FORMAT(`tblempleaveapplications`.`LivAppIncDateFrom`, '%b %d, %Y') AS LivAppIncDateFrom,`tblempleaveapplications`.`LivAppIncDayTimeFrom`,DATE_FORMAT(`tblempleaveapplications`.`LivAppIncDateTo`, '%b %d, %Y') AS LivAppIncDateTo,`tblempleaveapplications`.`LivAppIncDayTimeTo`,`tblempleaveapplications`.`LivAppStatus`,`tblleavetypes`.`LeaveTypeDesc`, `tblempleaveapplications`.`RECORD_TIME` FROM `tblempleaveapplications` JOIN `tblleavetypes` ON `tblempleaveapplications`.`LeaveTypeID`=`tblleavetypes`.`LeaveTypeID` WHERE (`tblempleaveapplications`.`LivAppStatus`='4') AND (`tblempleaveapplications`.`LeaveTypeID`!='LT08') AND tblempleaveapplications.EmpID = '$_SESSION[user]' AND (SELECT COUNT(tbldisleavenotif.LivAppID) FROM tbldisleavenotif WHERE tbldisleavenotif.notifiedEmp = 'applicant' AND tbldisleavenotif.LivAppID = tblempleaveapplications.LivAppID) = 0 ORDER BY `LivAppFiledDate` DESC";		
+		
+		if($getNotificationOnly) {
+			if($MySQLi->NumberOfRows($sql_approved_leaves)>0){
+				$Notify=true;
+				$records=$MySQLi->GetArray($sql_approved_leaves);
+				if(strtotime($records['RECORD_TIME'])>(strtotime($TIMESTAMP)-30)){$NotifVal=1;}
+			}		
+		} else {
+			$result=$MySQLi->sqlQuery($sql_approved_leaves);
+			while($records=mysqli_fetch_array($result, MYSQLI_BOTH)){
+				$EmpID=$records['EmpID'];
+				switch ($records['LivAppStatus']){case '0':$leavestatus="NEW";break;case '1':$leavestatus="POSTED";break;case '2':$leavestatus="NOTED";break;case '3':$leavestatus="CHECKED";break;case '4':$leavestatus="APPROVED";break;default: $leavestatus="DISAPPROVED";break;}
+				$LeaveDesc="<strong>$leavestatus</strong><br>";
+				$LeaveDesc.="<b>".$records['LeaveTypeDesc']."</b> Application of <b>".$Personnel->getEmpName($records['EmpID'])."</b>. From <b>".$records['LivAppIncDateFrom']." ".$records['LivAppIncDayTimeFrom']."</b> to <b>".$records['LivAppIncDateTo']." ".$records['LivAppIncDayTimeTo']."</b>, <b>".number_format($records['LivAppDays'],2)."</b> ";
+				$LeaveDesc.=($records['LivAppDays']>1)?" days.":" day.";
+					
+			?>
+				<p style="position: relative; margin-top: 12px;"><a href="javascript: disAppNotif('applicant','<?php echo $records['LivAppID']; ?>');" style="position:absolute; top:-13px; right:0;"><span class="ui-icon ui-icon-close"></span></a></p>
+				<a href="#" class="notification_item" style="cursor: default!important;"><table class="ui-widget-content ui-corner-all" style="width:280px;padding:0px;border-spacing:0px;margin:3px 0px 0px 0px;"><tr valign="center"><td width="20px" align="center"><span class='ui-icon ui-icon-calendar'></span></td><td><?php echo $LeaveDesc; ?></td></tr></table></a>
+			<?php
 			}
 		}
 		
@@ -242,6 +301,7 @@
 				}
 			}
 		}
+
 		
 		/* Travel Order Related Notifications --------------------------------------------------------------------------------------------------------------- */
 		if($TravAuth[5]){

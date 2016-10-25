@@ -904,7 +904,7 @@
 			cssdropdown.startchrome("chromemenu");
 			Notifier('1');
 			// $(function() { setInterval(function(){Notifier('1')},1000); });
-			$(function() { setInterval(function(){Notifier('1')},300000); });
+			$(function() { setInterval(function(){Notifier('1')},30000); });
 			
 		</script>
 	</body>

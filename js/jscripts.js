@@ -325,5 +325,50 @@ function gotoPage(opt,radio) {
 	
 	getEmpPage(opt,eid,mode);
 	$('#'+radio + '+label').addClass('ui-state-active');
+
+}
+
+function viewLeavePdf(id) {
+	window.open('reports/rpt_lv.php?id='+id,'mywindow','width=800,height=600');
+}
+
+function disAppNotif(ne,id) { // dismiss approve notification
 	
+	function reloadNotifications() {
+		
+		$.ajax({
+			url:"lib/pages/show_notifications.php",
+			global:false,
+			type:"POST",
+			data:{sid:Math.random()},
+			dataType:"html",
+			async:true,
+			beforeSend:function(){$("#notification_box").show("highlight");},
+			success:function(data){if(debugMode){alert(data);};
+				var fields=new Array();
+				fields=data.split('|');
+				if(fields[0]=='-1'){$('#d_message').dialog({close:function(event,ui){window.location.href="logout.php";}});showMessage(fields[2]);}
+				else if(fields[0]=='0'){showMessage(fields[2]);}
+				else if(fields[0]=='1'){$("#notification_content").html(fields[2]);}
+				else{showMessage(data);}
+				Notifier('1');
+			},
+			error:function(xhr,ajaxOptions,thrownError){showMessage("ERROR "+xhr.status+":~"+thrownError);}
+		});		
+		
+	}
+
+	$.ajax({
+		url:'lib/scripts/_dismiss_leave_notification.php',
+		global:false,
+		type:"POST",
+		data:{LivAppID: id, notifiedEmp: ne},
+		beforeSend:function(){$("#sys_pref_loading").show();},
+		complete:function(){$("#sys_pref_loading").hide("highlight");},
+		success:function(data){ if(debugMode){alert(data);};
+			reloadNotifications();
+		},
+		error:function(xhr,ajaxOptions,thrownError){showMessage("ERROR "+xhr.status+":~"+thrownError);return false;}
+	});
+
 }
