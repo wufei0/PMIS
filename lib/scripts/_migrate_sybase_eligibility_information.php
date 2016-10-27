@@ -101,7 +101,16 @@
 							$CSEHighest=($MySQLi->RealEscapeString(strtoupper(trim($CSEInfo['highest_elig'])))=='Y')?'1':'0';
 							
 							$sql='INSERT INTO `tblempcse`(`CSEID`, `EmpID`, `CSEDesc`, `CSERating`, `CSEExamDay`, `CSEExamMonth`, `CSEExamYear`, `CSEExamPlace`, `CSELicNum`, `CSELicReleaseDay`, `CSELicReleaseMonth`, `CSELicReleaseYear`, `CSEHighest`, `RECORD_TIME`) VALUES("'.$CSEID.'","'.$EmpID.'","'.$CSEDesc.'","'.$CSERating.'","'.$CSEExamDay.'","'.$CSEExamMonth.'","'.$CSEExamYear.'","'.$CSEExamPlace.'","'.$CSELicNum.'","'.$CSELicReleaseDay.'","'.$CSELicReleaseMonth.'","'.$CSELicReleaseYear.'","'.$CSEHighest.'", NOW());';
-							if($MySQLi->sqlQuery($sql,false)){$DoneOnID+=1;$DoneElig+=1;}
+							/*
+							**	Check if EmpID has entry in tblemppersonalinfo	
+							*/
+							$row=$MySQLi->NumberOfRows("SELECT * FROM tblemppersonalinfo WHERE EmpID = '$EmpID'");							
+							if ($row>0) {
+								if($MySQLi->sqlQuery($sql,false)){$DoneOnID+=1;$DoneElig+=1;}
+							} else {
+								$DoneOnID+=1;$DoneElig+=1;
+							}
+
 						}
 					}
 

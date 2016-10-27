@@ -105,7 +105,16 @@
 							$TrainSponsor=$MySQLi->RealEscapeString(strtoupper($Train['conducted_by']));
 							
 							$sql='INSERT INTO `tblemptrainings` (`TrainID`,`EmpID`,`TrainDesc`,`TrainFromDay`,`TrainFromMonth`,`TrainFromYear`,`TrainToDay`,`TrainToMonth`,`TrainToYear`,`TrainHours`,`TrainSponsor`,`RECORD_TIME`) VALUES ("'.$TrainID.'","'.$EmpID.'","'.$TrainDesc.'","'.$TrainFromDay.'","'.$TrainFromMonth.'","'.$TrainFromYear.'","'.$TrainToDay.'","'.$TrainToMonth.'","'.$TrainToYear.'","'.$TrainHours.'","'.$TrainSponsor.'",NOW());';
-							if($MySQLi->sqlQuery($sql,false)){$DoneOnID+=1;$DoneTrain+=1;}
+							/*
+							**	Check if EmpID has entry in tblemppersonalinfo	
+							*/
+							$row=$MySQLi->NumberOfRows("SELECT * FROM tblemppersonalinfo WHERE EmpID = '$EmpID'");							
+							if ($row>0) {
+								if($MySQLi->sqlQuery($sql,false)){$DoneOnID+=1;$DoneTrain+=1;}
+							} else {
+								$DoneOnID+=1;$DoneTrain+=1;
+							}
+
 						}
 						
 					}

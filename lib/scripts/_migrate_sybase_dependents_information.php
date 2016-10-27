@@ -107,7 +107,16 @@
 							}
 							$DpntRemarks=$MySQLi->RealEscapeString(strtoupper(trim($DpntInfo['remarks'])));
 							$sql="INSERT INTO `tblempdependents`(`DpntID`, `EmpID`, `DpntLName`, `DpntMName`, `DpntFName`, `DpntExtName`, `DpntBirthDay`, `DpntBirthMonth`, `DpntBirthYear`, `DpntSex`, `RelID`, `DpntRemarks`, `RECORD_TIME`) VALUES('".$DpntID."', '".$EmpID."', '".$DpntLName."', '".$DpntMName."', '".$DpntFName."', '".$DpntExtName."', '".$DpntBirthDay."', '".$DpntBirthMonth."', '".$DpntBirthYear."', '".$DpntSex."', '".$RelID."', '".$DpntRemarks."', NOW());";
-							if($MySQLi->sqlQuery($sql,false)){$DoneOnID+=1;$DoneDpnt+=1;}
+
+							/*
+							**	Check if EmpID has entry in tblemppersonalinfo	
+							*/
+							$row=$MySQLi->NumberOfRows("SELECT * FROM tblemppersonalinfo WHERE EmpID = '$EmpID'");							
+							if ($row>0) {
+								if($MySQLi->sqlQuery($sql,false)){$DoneOnID+=1;$DoneDpnt+=1;}
+							} else {
+								$DoneOnID+=1;$DoneDpnt+=1;
+							}
 						}
 					}
 					
