@@ -113,8 +113,16 @@
 							//$MySQLi->sqlQuery("DELETE FROM `tblempservicerecords` WHERE `SRecID` = '".$SRecID."';",false);
 							
 							//`SRecID`, `EmpID`, `SRecFromDay`, `SRecFromMonth`, `SRecFromYear`, `SRecToDay`, `SRecToMonth`, `SRecToYear`, `SRecIsGov`, `SRecEmployer`, `MotherOfficeID`, `AssignedOfficeID`, `SRecOffice`, `PosID`, `SRecPosition`, `SRecSalGradeStep`, `SRecSalary`, `ApptStID`, `SRecJobDesc`, `SalUnitID`, `SRecCurrentAppointment`, `SRecLivNoPay`, `SRecRemarks`, `RECORD_TIME`
-
-							$MySQLi->sqlQuery("INSERT INTO `tblempservicerecords` (`SRecID`, `EmpID`, `SRecFromDay`, `SRecFromMonth`, `SRecFromYear`, `SRecToDay`, `SRecToMonth`, `SRecToYear`, `SRecIsGov`, `SRecEmployer`, `MotherOfficeID`, `AssignedOfficeID`, `SRecOffice`, `PosID`, `SRecPosition`, `SRecSalGradeStep`, `SRecSalary`, `ApptStID`, `SRecJobDesc`, `SalUnitID`, `SRecCurrentAppointment`, `SRecLivNoPay`, `SRecRemarks`, `RECORD_TIME`) VALUES ('".$SRecID."', '".$EmpID."', '".$SRecFromDay."', '".$SRecFromMonth."', '".$SRecFromYear."', '".$SRecToDay."', '".$SRecToMonth."', '".$SRecToYear."', '".$SRecIsGov."', '".$SRecEmployer."', '".$MotherOfficeID."', '".$AssignedOfficeID."', '', '".$PosID."', '' '".$SRecSalGradeStep."', 0.00, '".$ApptStID."', '".$SRecJobDesc."', '".$SalUnitID."',  '".$SRecCurrentAppointment."', '".$SRecLivNoPay."', '".$SRecRemarks."', NOW());",false);
+							/*
+							**	Check if EmpID has entry in tblemppersonalinfo	
+							*/
+							$row=$MySQLi->NumberOfRows("SELECT * FROM tblemppersonalinfo WHERE EmpID = '$EmpID'");							
+							if ($row>0) {
+								$sql = "INSERT INTO `tblempservicerecords` ";
+								$sql .= "(`SRecID`, `EmpID`, `SRecFromDay`, `SRecFromMonth`, `SRecFromYear`, `SRecToDay`, `SRecToMonth`, `SRecToYear`, `SRecIsGov`, `SRecEmployer`, `MotherOfficeID`, `AssignedOfficeID`, `SRecOffice`, `PosID`, `SRecPosition`, `SRecSalGradeStep`, `SRecSalary`, `ApptStID`, `SRecJobDesc`, `SalUnitID`, `SRecCurrentAppointment`, `SRecLivNoPay`, `SRecRemarks`, `RECORD_TIME`) VALUES";
+								$sql .= "('".$SRecID."', '".$EmpID."', '".$SRecFromDay."', '".$SRecFromMonth."', '".$SRecFromYear."', '".$SRecToDay."', '".$SRecToMonth."', '".$SRecToYear."', '".$SRecIsGov."', '".$SRecEmployer."', '".$MotherOfficeID."', '".$AssignedOfficeID."', '', '".$PosID."', '' '".$SRecSalGradeStep."', '0.00', '".$ApptStID."', '".$SRecJobDesc."', '".$SalUnitID."',  '".$SRecCurrentAppointment."', '".$SRecLivNoPay."', '".$SRecRemarks."', NOW())";
+								$MySQLi->sqlQuery($sql,false);
+							}
 						}
 						
 					}

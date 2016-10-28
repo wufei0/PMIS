@@ -102,7 +102,7 @@
 								}
 							}
 							$TrainHours="";
-							$TrainSponsor=$MySQLi->RealEscapeString(strtoupper($Train['conducted_by']));
+							$TrainSponsor=$MySQLi->RealEscapeString(strtoupper($TrainInfo['conducted_by']));
 							
 							$sql='INSERT INTO `tblemptrainings` (`TrainID`,`EmpID`,`TrainDesc`,`TrainFromDay`,`TrainFromMonth`,`TrainFromYear`,`TrainToDay`,`TrainToMonth`,`TrainToYear`,`TrainHours`,`TrainSponsor`,`RECORD_TIME`) VALUES ("'.$TrainID.'","'.$EmpID.'","'.$TrainDesc.'","'.$TrainFromDay.'","'.$TrainFromMonth.'","'.$TrainFromYear.'","'.$TrainToDay.'","'.$TrainToMonth.'","'.$TrainToYear.'","'.$TrainHours.'","'.$TrainSponsor.'",NOW());';
 							/*
