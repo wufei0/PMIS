@@ -102,6 +102,7 @@
 							$SRecEmployer="PROVINCIAL GOVERNMENT OF LA UNION";
 							$MotherOfficeID="";
 							$AssignedOfficeID="";
+							$SRecOffice="";
 							//$PosID=$PosID;
 							if(strpbrk($PosInfo['sg_step'],'/')){$SalGradeStep=explode("/",$PosInfo['sg_step']);$SRecSalGradeStep=$SalGradeStep[1];}
 							else{$SRecSalGradeStep="0";}
@@ -120,8 +121,9 @@
 							if ($row>0) {
 								$sql = "INSERT INTO `tblempservicerecords` ";
 								$sql .= "(`SRecID`, `EmpID`, `SRecFromDay`, `SRecFromMonth`, `SRecFromYear`, `SRecToDay`, `SRecToMonth`, `SRecToYear`, `SRecIsGov`, `SRecEmployer`, `MotherOfficeID`, `AssignedOfficeID`, `SRecOffice`, `PosID`, `SRecPosition`, `SRecSalGradeStep`, `SRecSalary`, `ApptStID`, `SRecJobDesc`, `SalUnitID`, `SRecCurrentAppointment`, `SRecLivNoPay`, `SRecRemarks`, `RECORD_TIME`) VALUES";
-								$sql .= "('".$SRecID."', '".$EmpID."', '".$SRecFromDay."', '".$SRecFromMonth."', '".$SRecFromYear."', '".$SRecToDay."', '".$SRecToMonth."', '".$SRecToYear."', '".$SRecIsGov."', '".$SRecEmployer."', '".$MotherOfficeID."', '".$AssignedOfficeID."', '', '".$PosID."', '' '".$SRecSalGradeStep."', '0.00', '".$ApptStID."', '".$SRecJobDesc."', '".$SalUnitID."',  '".$SRecCurrentAppointment."', '".$SRecLivNoPay."', '".$SRecRemarks."', NOW())";
-								$MySQLi->sqlQuery($sql,false);
+								$sql .= "('".$SRecID."', '".$EmpID."', '".$SRecFromDay."', '".$SRecFromMonth."', '".$SRecFromYear."', '".$SRecToDay."', '".$SRecToMonth."', '".$SRecToYear."', '".$SRecIsGov."', '".$SRecEmployer."', '".$MotherOfficeID."', '".$AssignedOfficeID."', '".$SRecOffice."', '".$PosID."', '', '".$SRecSalGradeStep."', '0.00', '".$ApptStID."', '".$SRecJobDesc."', '".$SalUnitID."',  '".$SRecCurrentAppointment."', '".$SRecLivNoPay."', '".$SRecRemarks."', NOW())";
+								$isExisting = $MySQLi->NumberOfRows("SELECT * FROM tblempservicerecords WHERE SRecID = '$SRecID'");
+								if ($isExisting == 0) $MySQLi->sqlQuery($sql,false);
 							}
 						}
 						
