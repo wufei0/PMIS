@@ -103,7 +103,7 @@
 					$LeaveTypeFilter=($Ty!="0")?" AND `LeaveTypeID` = '".$Ty."' ":"";
 					$YearFilter=($Yr!=0)?" AND `LivCredDateFrom` LIKE '".$Yr."%' ":"";
 					$RRFilter=($Rr!="")?" AND (`LivCredReference` LIKE '%".$Rr."%' OR `LivCredRemarks` LIKE '%".$Rr."%')":"";
-					$sql="SELECT *, DATE_FORMAT(`LivCredDateFrom`, '%Y-%m-%d') AS LivCredDateFrom, DATE_FORMAT(`LivCredDateTo`, '%Y-%m-%d') AS LivCredDateTo FROM `tblempleavecredits` WHERE `EmpID` = '".$EmpID."' ".$LeaveTypeFilter.$YearFilter.$RRFilter." ORDER BY `LivCredDateTo` ASC;";
+					$sql="SELECT *, DATE_FORMAT(`LivCredDateFrom`, '%Y-%m-%d') AS LivCredDateFrom, DATE_FORMAT(`LivCredDateTo`, '%Y-%m-%d') AS LivCredDateTo FROM `tblempleavecredits` WHERE `EmpID` = '".$EmpID."' ".$LeaveTypeFilter.$YearFilter.$RRFilter." ORDER BY `LivCredDateTo` ASC;"; logger($sql);
 					$result=$MySQLi->sqlQuery($sql);
 					while($records=mysqli_fetch_array($result, MYSQLI_BOTH)){
 						if($n%2==0){echo "<tr class='i_table_row_0'>";}
@@ -318,7 +318,7 @@
 								}
 							}
 							break;
-						case 4: logger($LeaveAuth[7]);
+						case 4: 
 							if($LeaveAuth[7]){
 								$denyIconState="disabled";$denyIconAction="";
 								$chekIconState="disabled";$chekIconAction="";

@@ -7,7 +7,7 @@
 	/* - - - - - - - - - -  A U T H E N T I C A T I O N - - - - - - - - - - */
 	require_once $_SESSION['path'].'/lib/classes/Authentication.php';$Authentication=new Authentication();$ActiveStatus=explode("|",$Authentication->isUserActive($_SESSION['user'],$_SESSION['fingerprint']));if($ActiveStatus[0]!=1){echo "-1|".$_SESSION['user']."|".$ActiveStatus[1];exit();}
 	/* Check user access to this module */
-	$LeaveAuth=str_split($Authentication->getAuthorization($_SESSION['user'],'MOD018')); logger(print_r($LeaveAuth,true));
+	$LeaveAuth=str_split($Authentication->getAuthorization($_SESSION['user'],'MOD018')); // logger(print_r($LeaveAuth,true));
 	for($i=0;$i<=7;$i++){$LeaveAuth[$i]=$LeaveAuth[$i]==1?true:false;}
 	$COCAuth=str_split($Authentication->getAuthorization($_SESSION['user'],'MOD020'));
 	for($i=0;$i<=7;$i++){$COCAuth[$i]=$COCAuth[$i]==1?true:false;}
