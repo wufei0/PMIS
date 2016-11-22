@@ -70,15 +70,15 @@
 				<table style="width:365px;">
 					<tr>
 						<td class="form_label"><label>ID Number From:</label></td>
-						<td class="pds_form_input"><input type="text" name="dFirstID" id="dFirstID" class="text_input" value="0" style="width:70px;text-align:center;"></td>
+						<td class="pds_form_input"><input type="text" name="dFirstID" id="dFirstID" class="text_input" style="width:70px;text-align:center;" ng-model="ids.start"></td>
 						<td class="form_label"><label>To:</label></td>
-						<td class="pds_form_input" style="text-align:left;"><input type="text" name="dLastID" id="dLastID" class="text_input" value="99999" style="width:70px;text-align:center;"></td>
+						<td class="pds_form_input" style="text-align:left;"><input type="text" name="dLastID" id="dLastID" class="text_input" style="width:70px;text-align:center;" ng-model="ids.end"></td>
 						<td rowspan="3" style="text-align:right;"><button class="start_button" style="padding:10px 5px 10px 5px;" start-task>Start</button></td>
 					</tr>
 				</table>
 			</div>
 			
-			<textarea id="migrate_dtr_logs" rows='30' cols='66' readonly></textarea>
+			<textarea style="padding-left: 3px;" id="console-status" rows='30' cols='66' readonly></textarea>
 			
 			<div id="pbar"><div id="pbar-label" class="pbar-label">{{views.status}}</div></div>
 			

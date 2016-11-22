@@ -1,0 +1,15 @@
+---- 11/03/2016 11:32:33 AM ----
+
+SELECT *, DATE_FORMAT(`LivCredDateFrom`, '%Y-%m-%d') AS LivCredDateFrom, DATE_FORMAT(`LivCredDateTo`, '%Y-%m-%d') AS LivCredDateTo FROM `tblempleavecredits` WHERE `EmpID` = '93009'  AND `LivCredDateFrom` LIKE '2016%'  ORDER BY `LivCredDateTo` ASC;
+
+-------------- end -------------
+---- 11/21/2016 09:28:25 AM ----
+
+SELECT *, DATE_FORMAT(`LivCredDateFrom`, '%Y-%m-%d') AS LivCredDateFrom, DATE_FORMAT(`LivCredDateTo`, '%Y-%m-%d') AS LivCredDateTo FROM `tblempleavecredits` WHERE `EmpID` = '82156'  AND `LivCredDateFrom` LIKE '2016%'  ORDER BY `LivCredDateTo` ASC;
+
+-------------- end -------------
+---- 11/21/2016 09:45:12 AM ----
+
+SELECT *, DATE_FORMAT(`LivCredDateFrom`, '%Y-%m-%d') AS LivCredDateFrom, DATE_FORMAT(`LivCredDateTo`, '%Y-%m-%d') AS LivCredDateTo FROM `tblempleavecredits` WHERE `EmpID` = '93009'  AND `LivCredDateFrom` LIKE '2016%'  ORDER BY `LivCredDateTo` ASC;
+
+-------------- end -------------
