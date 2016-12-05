@@ -82,8 +82,20 @@ class LeaveFunctions extends COCFunctions {
 	public function checkFilingDate($fl,$ft,$tt,$lt){
 		
 		$fd=$fl;//date('U',mktime(00,00,00,date('m'),date('j'),date('Y')));
-		if($lt=="LT01"){if($fd>($ft-(86400*1))){echo "0|".$_SESSION['user']."|ERROR 406:~Late Filing. Vacation Leave shall be filed five (5) days in advance, whenever possible, of the effective date of such leave.<br/><i>- PGLU Employees Handbook (page 35)</i>";exit();}else{return false;}}
-		else if($lt=="LT02"){
+		if($lt=="LT01") {
+			
+		/*	if ($fd>($ft-(86400*1))) {
+				echo "0|".$_SESSION['user']."|ERROR 406:~Late Filing. Vacation Leave shall be filed five (5) days in advance, whenever possible, of the effective date of such leave.<br/><i>- PGLU Employees Handbook (page 35)</i>";exit();
+			} else {
+				return false;
+			} */
+			if ($this->countWeekDays(date("Y-m-d",$tt)) > 15) {
+				echo "0|".$_SESSION['user']."|ERROR 406:~Late Filing. Vacation Leave shall be accomodated until the 15<sup>th</sup> day after the consumption of leave.";exit();
+			} else {
+				return false;
+			}	
+			
+		} else if($lt=="LT02") {
 			
 		/*	$fd=(date('N',$fd)==1)?($fd-86400-86400):$fd;
 			if($fd>($tt+86400)){
@@ -94,7 +106,7 @@ class LeaveFunctions extends COCFunctions {
 			} */
 			
 			if ($this->countWeekDays(date("Y-m-d",$tt)) > 15) {				
-				echo "0|".$_SESSION['user']."|ERROR 406:~Late Filing. Sick Leave will be entertained until 15<sup>th</sup> day after the consumption of leave.";exit();
+				echo "0|".$_SESSION['user']."|ERROR 406:~Late Filing. Sick Leave shall be accomodated until the 15<sup>th</sup> day after the consumption of leave.";exit();
 			} else {
 				return false;
 			}
@@ -171,7 +183,8 @@ class LeaveFunctions extends COCFunctions {
 		$end = date("Y-m-d");
 		while (strtotime($day) <= strtotime($end)) {
 			
-			if ((date("D",strtotime($day)) != "Sat") && (date("D",strtotime($day)) != "Sun")) $weekDays++;
+			// if ((date("D",strtotime($day)) != "Sat") && (date("D",strtotime($day)) != "Sun")) $weekDays++;
+			$weekDays++;
 			$day = date ("Y-m-d", strtotime("+1 day", strtotime($day)));			
 			
 		}
