@@ -18,9 +18,9 @@ break;
 
 case "fixLeavesProcess":
 
-	$con = new pdo_db();
+	$con = new pdo_db("tblempleavecredits");
 
-	$sql = "SELECT * FROM tblempleavecredits WHERE EmpID = '$_POST[id]' AND LeaveTypeID = 'LT01' ORDER BY LeaveTypeID ASC, LivCredID ASC";
+	$sql = "SELECT LivCredID, EmpID, LivCredDateFrom, LivCredDateTo, LivCredAddTo, LivCredDeductTo, LivCredBalance, LivCredReference, LivCredRemarks FROM tblempleavecredits WHERE EmpID = '$_POST[id]' AND LeaveTypeID = 'LT01' ORDER BY LivCredDateTo ASC";
 	$VL = $con->getData($sql);
 
 	foreach ($VL as $key => $value) {
@@ -30,17 +30,19 @@ case "fixLeavesProcess":
 		// compute row balance
 		$LivCredAddTo = 0;
 		$LivCredDeductTo = 0;
+		$LivCredBalance = 0;
 		for ($i=$key; $i>=0; $i--) {
 			$LivCredAddTo += $VL[$i]['LivCredAddTo'];
 			$LivCredDeductTo += $VL[$i]['LivCredDeductTo'];
 		}
-		$VL[$key]['LivCredBalance'] = $LivCredAddTo - $LivCredDeductTo;
+		$LivCredBalance = $LivCredAddTo - $LivCredDeductTo;
+		$update = $con->updateData(array("LivCredID"=>$VL[$key]['LivCredID'],"LivCredBalance"=>$LivCredBalance),'LivCredID');
 
 	}
 
-	$sql = "SELECT * FROM tblempleavecredits WHERE EmpID = '$_POST[id]' AND LeaveTypeID = 'LT02' ORDER BY LeaveTypeID ASC, LivCredID ASC";
+	$sql = "SELECT LivCredID, EmpID, LivCredDateFrom, LivCredDateTo, LivCredAddTo, LivCredDeductTo, LivCredBalance, LivCredReference, LivCredRemarks FROM tblempleavecredits WHERE EmpID = '$_POST[id]' AND LeaveTypeID = 'LT02' ORDER BY LivCredDateTo ASC";
 	$SL = $con->getData($sql);
-	
+
 	foreach ($SL as $key => $value) {
 		
 		if ($key == 0) continue; // skip beginning balance
@@ -48,20 +50,19 @@ case "fixLeavesProcess":
 		// compute row balance
 		$LivCredAddTo = 0;
 		$LivCredDeductTo = 0;
+		$LivCredBalance = 0;		
 		for ($i=$key; $i>=0; $i--) {
 			$LivCredAddTo += $SL[$i]['LivCredAddTo'];
 			$LivCredDeductTo += $SL[$i]['LivCredDeductTo'];
 		}
-		$SL[$key]['LivCredBalance'] = $LivCredAddTo - $LivCredDeductTo;
+		$LivCredBalance = $LivCredAddTo - $LivCredDeductTo;
+		$update = $con->updateData(array("LivCredID"=>$SL[$key]['LivCredID'],"LivCredBalance"=>$LivCredBalance),'LivCredID');
 
-	}	
-	
-	var_dump($SL);
-	
-	// $response = array("status"=>1,"content"=>"DONE\n");
-	
-	// echo json_encode($response);
-	// echo json_encode($leaves);
+	}
+
+	$response = array("status"=>1,"content"=>"DONE\n");
+
+	echo json_encode($response);
 
 break;
 	

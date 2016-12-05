@@ -22,8 +22,8 @@ app.service('utilsService',function($http) {
 			  url: 'controllers/utils.php?r=fixLeavesStart'
 			}).then(function mySucces(response) {
 				
-				scope.idCurrent = 0;
-				scope.idCount = response.data.length - 1;
+				scope.idCurrent = 1;
+				scope.idCount = response.data.length;
 				fixLeaves(response.data);
 			
 			}, function myError(response) {
@@ -34,10 +34,11 @@ app.service('utilsService',function($http) {
 			
 			function fixLeaves(EmpIDs) {
 				
-				$('#console-status').append('Fixing '+EmpIDs[scope.idCurrent]['EmpID']+'..');
+				var i = scope.idCurrent - 1;
+				$('#console-status').append('Fixing '+EmpIDs[i]['EmpID']+'..');
 				$http({
 				  method: 'POST',
-				  data: {id: EmpIDs[scope.idCurrent]['EmpID']},
+				  data: {id: EmpIDs[i]['EmpID']},
 				  url: 'controllers/utils.php?r=fixLeavesProcess'
 				}).then(function mySucces(response) {
 					
@@ -49,7 +50,7 @@ app.service('utilsService',function($http) {
 						$('#console-status').append(response.data['content']);
 						var psconsole = $('#console-status');
 						psconsole.scrollTop(psconsole[0].scrollHeight - psconsole.height());					
-						if (scope.idCurrent <= scope.idCount) {
+						if (scope.idCurrent < scope.idCount) {
 							scope.idCurrent++;
 							fixLeaves(EmpIDs);
 						}
