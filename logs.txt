@@ -13,3 +13,23 @@ SELECT *, DATE_FORMAT(`LivCredDateFrom`, '%Y-%m-%d') AS LivCredDateFrom, DATE_FO
 SELECT *, DATE_FORMAT(`LivCredDateFrom`, '%Y-%m-%d') AS LivCredDateFrom, DATE_FORMAT(`LivCredDateTo`, '%Y-%m-%d') AS LivCredDateTo FROM `tblempleavecredits` WHERE `EmpID` = '93009'  AND `LivCredDateFrom` LIKE '2016%'  ORDER BY `LivCredDateTo` ASC;
 
 -------------- end -------------
+---- 12/05/2016 02:15:50 PM ----
+
+SELECT *, DATE_FORMAT(`LivCredDateFrom`, '%Y-%m-%d') AS LivCredDateFrom, DATE_FORMAT(`LivCredDateTo`, '%Y-%m-%d') AS LivCredDateTo FROM `tblempleavecredits` WHERE `EmpID` = '93009'  AND `LivCredDateFrom` LIKE '2016%'  ORDER BY `LivCredDateTo` ASC;
+
+-------------- end -------------
+---- 12/05/2016 02:15:52 PM ----
+
+SELECT *, DATE_FORMAT(`LivCredDateFrom`, '%Y-%m-%d') AS LivCredDateFrom, DATE_FORMAT(`LivCredDateTo`, '%Y-%m-%d') AS LivCredDateTo FROM `tblempleavecredits` WHERE `EmpID` = '93009'  AND `LivCredDateFrom` LIKE '2016%'  ORDER BY `LivCredDateTo` ASC;
+
+-------------- end -------------
+---- 12/05/2016 02:16:05 PM ----
+
+SELECT *, DATE_FORMAT(`LivCredDateFrom`, '%Y-%m-%d') AS LivCredDateFrom, DATE_FORMAT(`LivCredDateTo`, '%Y-%m-%d') AS LivCredDateTo FROM `tblempleavecredits` WHERE `EmpID` = '93009'  AND `LivCredDateFrom` LIKE '2016%'  ORDER BY `LivCredDateTo` ASC;
+
+-------------- end -------------
+---- 12/05/2016 02:16:10 PM ----
+
+SELECT *, DATE_FORMAT(`LivCredDateFrom`, '%Y-%m-%d') AS LivCredDateFrom, DATE_FORMAT(`LivCredDateTo`, '%Y-%m-%d') AS LivCredDateTo FROM `tblempleavecredits` WHERE `EmpID` = '93009'  AND `LivCredDateFrom` LIKE '2016%'  ORDER BY `LivCredDateTo` ASC;
+
+-------------- end -------------

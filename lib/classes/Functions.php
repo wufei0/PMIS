@@ -112,8 +112,21 @@ class LeaveFunctions extends COCFunctions {
 			}
 			
 		} // if($fd>($tt+86400))
-		else if($lt=="LT03"){if($fd>($ft-(86400*1))){echo "0|".$_SESSION['user']."|ERROR 406:~Late Filing. Privilege Leave shall be filed five (5) days in advance, whenever possible, of the effective date of such leave.<br/><i>- PGLU Employees Handbook (page 35)</i>";exit();}else{return false;}}
-		else if($lt=="LT04"){}
+		else if($lt=="LT03"){
+			
+/* 			if ($fd>($ft-(86400*1))) {
+				echo "0|".$_SESSION['user']."|ERROR 406:~Late Filing. Privilege Leave shall be filed five (5) days in advance, whenever possible, of the effective date of such leave.<br/><i>- PGLU Employees Handbook (page 35)</i>";exit();
+			} else {
+				return false;
+			} */
+			
+			if ($this->countWeekDays(date("Y-m-d",$tt)) > 15) {				
+				echo "0|".$_SESSION['user']."|ERROR 406:~Late Filing. Privilege Leave shall be accomodated until the 15<sup>th</sup> day after the consumption of leave.";exit();
+			} else {
+				return false;
+			}			
+			
+		} else if($lt=="LT04"){}
 		else if($lt=="LT05"){if(($fd>($ft-(86400*1)))||($fd<($tt+(86400*1)))){echo "0|".$_SESSION['user']."|ERROR 406:~Late Filing. Paternity leave shall be filed immediately before or on the day of delivery of the legitimate wife, or immediately upon employee's return from such leave.<br/><i>- PGLU Employees Handbook (page 37)</i>";exit();}}
 		else if($lt=="LT06"){}
 		else if($lt=="LT07"){}
