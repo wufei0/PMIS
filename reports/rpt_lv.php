@@ -124,18 +124,18 @@
 	$pdf->SetFont('Arial','BI',8);
 		$pdf->SetXY(25,216);$pdf->Cell(25,4,'Vacation Leave','B',0,'C',false);$pdf->Cell(25,4,'Sick Leave','B',0,'C',false);$pdf->Cell(25,4,'TOTAL','B',0,'C',false);
 	
-	$ApprovedVL=(($LivInfo['LeaveTypeID']=='LT01')?number_format($LivInfo['LivAppApprovedDays'],2):'0.00');
-	$ApprovedSL=(($LivInfo['LeaveTypeID']=='LT02')?number_format($LivInfo['LivAppApprovedDays'],2):'0.00');
-	$pdf->SetFont('Courier','',8);
-		$pdf->SetXY(25,220);$pdf->Cell(20,4,number_format($VLCredit,2),0,0,'R',false);$pdf->Cell(5,4,'',0,0,'R',false);$pdf->Cell(20,4,number_format($SLCredit,2),0,0,'R',false);$pdf->Cell(5,4,'',0,0,'R',false);$pdf->Cell(20,4,number_format($TLCredit,2),0,0,'R',false);$pdf->Cell(5,4,'',0,0,'R',false);
-		$pdf->SetXY(25,224);$pdf->Cell(20,3.5,$ApprovedVL,0,0,'R',false);$pdf->Cell(5,3.5,'',0,0,'R',false);$pdf->Cell(20,3.5,$ApprovedSL,0,0,'R',false);$pdf->Cell(5,3.5,'',0,0,'R',false);$pdf->Cell(20,3.5,number_format($ApprovedVL+$ApprovedSL,2),0,0,'R',false);$pdf->Cell(5,3.5,'',0,0,'R',false);
+	// $ApprovedVL=(($LivInfo['LeaveTypeID']=='LT01')?number_format($LivInfo['LivAppApprovedDays'],2):'0.00');
+	// $ApprovedSL=(($LivInfo['LeaveTypeID']=='LT02')?number_format($LivInfo['LivAppApprovedDays'],2):'0.00');
+	// $pdf->SetFont('Courier','',8);
+		// $pdf->SetXY(25,220);$pdf->Cell(20,4,number_format($VLCredit,2),0,0,'R',false);$pdf->Cell(5,4,'',0,0,'R',false);$pdf->Cell(20,4,number_format($SLCredit,2),0,0,'R',false);$pdf->Cell(5,4,'',0,0,'R',false);$pdf->Cell(20,4,number_format($TLCredit,2),0,0,'R',false);$pdf->Cell(5,4,'',0,0,'R',false);
+		// $pdf->SetXY(25,224);$pdf->Cell(20,3.5,$ApprovedVL,0,0,'R',false);$pdf->Cell(5,3.5,'',0,0,'R',false);$pdf->Cell(20,3.5,$ApprovedSL,0,0,'R',false);$pdf->Cell(5,3.5,'',0,0,'R',false);$pdf->Cell(20,3.5,number_format($ApprovedVL+$ApprovedSL,2),0,0,'R',false);$pdf->Cell(5,3.5,'',0,0,'R',false);
 	
-	$pdf->SetFont('Courier','B',8);
-		$pdf->SetXY(25,228);$pdf->Cell(20,4,number_format($VLCredit-$ApprovedVL,2),'TB',0,'R',false);$pdf->Cell(5,4,'','TB',0,'R',false);$pdf->Cell(20,4,number_format($SLCredit-$ApprovedSL,2),'TB',0,'R',false);$pdf->Cell(5,4,'','TB',0,'R',false);$pdf->Cell(20,4,number_format(($VLCredit-$ApprovedVL)+($SLCredit-$ApprovedSL),2),'TB',0,'R',false);$pdf->Cell(5,4,'','TB',0,'R',false);
-	$pdf->SetFont('Helvetica','',8);	
-		$pdf->SetXY(125,218);$pdf->Cell(70,4,'','B',0,'R',false);
-		$pdf->SetXY(125,222);$pdf->Cell(70,4,'','B',0,'R',false);
-		$pdf->SetXY(125,226);$pdf->Cell(70,4,'','B',0,'R',false);
+	// $pdf->SetFont('Courier','B',8);
+		// $pdf->SetXY(25,228);$pdf->Cell(20,4,number_format($VLCredit-$ApprovedVL,2),'TB',0,'R',false);$pdf->Cell(5,4,'','TB',0,'R',false);$pdf->Cell(20,4,number_format($SLCredit-$ApprovedSL,2),'TB',0,'R',false);$pdf->Cell(5,4,'','TB',0,'R',false);$pdf->Cell(20,4,number_format(($VLCredit-$ApprovedVL)+($SLCredit-$ApprovedSL),2),'TB',0,'R',false);$pdf->Cell(5,4,'','TB',0,'R',false);
+	// $pdf->SetFont('Helvetica','',8);	
+		// $pdf->SetXY(125,218);$pdf->Cell(70,4,'','B',0,'R',false);
+		// $pdf->SetXY(125,222);$pdf->Cell(70,4,'','B',0,'R',false);
+		// $pdf->SetXY(125,226);$pdf->Cell(70,4,'','B',0,'R',false);
 	$pdf->SetFont('Arial','B',10);
 		$pdf->SetXY(35,240);$pdf->Image('../signatures/'.$LivInfo['LivAppCheckedBy'].'.png',18.5,226,88,20,'PNG');$pdf->Cell(55,4,getEmpName($LivInfo['LivAppCheckedBy']),'T',0,'C',false);$pdf->SetXY(132.5,240);$pdf->Image('../signatures/'.$LivInfo['LivAppNotedBy'].'.png',116,228,88,20,'PNG');$pdf->Cell(55,4,getEmpName($LivInfo['LivAppNotedBy']),'T',0,'C',false);
 	$pdf->SetFont('Arial','I',7);
