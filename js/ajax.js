@@ -432,7 +432,7 @@ function processForm(opt,form){
 /* ----------------------------------------------------------------------------------------------------------- */
 
 /* For ADMIN/AO - Travel Orders */
-function showPendingDocuments(opt,lt,yr,mo,st){
+function showPendingDocuments(opt,lt,yr,mo,ei,st){
 	var url,frmTitle;
 	switch (opt){		
 		case("vliv"):url="lib/pages/view_leave_applications.php";frmTitle="Leave Applications";break;
@@ -449,7 +449,7 @@ function showPendingDocuments(opt,lt,yr,mo,st){
 			url:url,
 			global:false,
 			type:"POST",
-			data:{Lt:lt,Yr:yr,Mo:mo,St:st,sid:Math.random()},
+			data:{Lt:lt,Yr:yr,Mo:mo,Ei:ei,St:st,sid:Math.random()},
 			dataType:"html",
 			async:false,
 			

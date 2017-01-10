@@ -23,6 +23,7 @@
 	$Lt=isset($_POST['Lt'])?trim(strip_tags($_POST['Lt'])):date('X');
 	$Yr=isset($_POST['Yr'])?trim(strip_tags($_POST['Yr'])):date('Y');
 	$Mo=isset($_POST['Mo'])?trim(strip_tags($_POST['Mo'])):date('m');
+	$Ei=isset($_POST['Ei'])?trim(strip_tags($_POST['Ei'])):"";
 	$St=isset($_POST['St'])?trim(strip_tags($_POST['St'])):'X';
 	
 	$MONTHS=Array('','JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER');
@@ -66,6 +67,11 @@
 					<?php for($m=1;$m<=12;$m++){if($m==$Mo){echo "<option value='$m' selected>".$MONTHS[$m]."</option>";  $StStr.=" AND `LivAppIncDateFrom` LIKE '%-".($Mo>9?$Mo:"0".$Mo)."-%' ";}else{echo "<option value='$m'>".$MONTHS[$m]."</option>";}} ?>
 					</select>
 				</td>
+			<td class="form_label filter_bar"><label>EmpID:</label></td>
+				<td class="pds_form_input filter_bar" style="width:50px;">
+					<input type="text" id="flt_empid" name="flt_empid" class="text_input" style="width:45px;" value="<?php echo $Ei; ?>">
+					<?php if ($Ei != "") $StStr = " AND EmpID = '$Ei' "; ?>
+				</td>			
 			<td class="form_label filter_bar"><label>Status:</label></td>
 				<td align="right" style="width:35px;">
 					<input type="radio" id="st_show_all" name="flt_status" value="X" <?php if($St=="X"){echo "checked='checked'";}?> />

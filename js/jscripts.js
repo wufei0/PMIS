@@ -77,15 +77,16 @@ function isGov(is){
 
 /* Filter Query */
 function FilterQuery(form){
-	var fl=form.name;
+	var fl=form.name; console.log(fl);
 	var lt=form.flt_ltype.value;
 	var yr=form.flt_year.value;
 	var mo=form.flt_month.value;
+	var ei=form.flt_empid.value;
 	var st;
 	for(i=0;i<=4;i++){if(form.flt_status[i].checked){st=form.flt_status[i].value;}}
 	//showMessage("Year: "+yr+"<br/>Month: "+mo+"<br/>Status: "+st);
 	if(fl=="filter_to"){showPendingDocuments("vtra",yr,mo,st);}
-	else if(fl=="filter_lv"){showPendingDocuments("vliv",lt,yr,mo,st);}
+	else if(fl=="filter_lv"){showPendingDocuments("vliv",lt,yr,mo,ei,st);}
 }
 
 /* Message BOX modal alert */
