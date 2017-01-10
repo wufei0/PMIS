@@ -35,7 +35,7 @@
 
 <center><br/>
 	<form name="filter_lv" id="filter" onSubmit="FilterQuery(this);return false;">
-	<table class="filter_bar" cellspacing="0" cellpadding="0" style="width:900px;margin-left:20px;margin-right:20px;">
+	<table class="filter_bar" cellspacing="0" cellpadding="0" style="width:1100px;margin-left:20px;margin-right:20px;">
 		<tr>
 			<td class="form_label_l filter_bar" style="width:55px;"><label><b>FILTER:</b></label></td>
 			<td class="form_label filter_bar"><label>Type:</label></td>
@@ -90,39 +90,40 @@
 		</tr>
 	</table>
 	</form>
-	<table class="i_table" style="width:900px;" cellspacing="0">
+	<table class="i_table" style="width:1100px;" cellspacing="0">
 		<tr>
-			<td class="i_table_header_1st" rowspan="2" width="25px">#</td>
-			<td class="i_table_header" style="padding:0px 3px 0px 3px;" rowspan="2" width="70px">Date of Application</td>
-			<td class="i_table_header" style="padding:0px 3px 0px 3px;" rowspan="2" width="130px">Emplyoyee Name</td>
-			<td class="i_table_header" style="padding:0px 3px 0px 3px;" rowspan="2" width="35px">Leave<br/>Type</td>
-			<td class="i_table_header" style="padding:0px 3px 0px 3px;" rowspan="2" width="45px">Number of Days</td>
-			<td class="i_table_header" colspan="2" width="140px">Inclusive Dates</td>
-			<td class="i_table_header" style="padding:0px 3px 0px 3px;" rowspan="2">Leave Notes</td>
-			<td class="i_table_header" style="padding:0px 3px 0px 3px;" rowspan="2" width="75px">Status</td>
-			<td class="i_table_header" style="padding:0px 3px 0px 3px;" rowspan="2" width="120px">Remarks</td>
+			<td class="i_table_header_1st" rowspan="2" width="33px">#</td>
+			<td class="i_table_header" style="padding:0px 3px 0px 3px;" rowspan="2" width="86px">Date of Application</td>
+			<td class="i_table_header" style="padding:0px 3px 0px 3px;" rowspan="2" width="158px">Emplyoyee Name</td>
+			<td class="i_table_header" style="padding:0px 3px 0px 3px;" rowspan="2" width="42px">Leave<br/>Type</td>
+			<td class="i_table_header" style="padding:0px 3px 0px 3px;" rowspan="2" width="56px">Number of Days</td>
+			<td class="i_table_header" colspan="2" width="208px">Inclusive Dates</td>
+			<td class="i_table_header" style="padding:0px 3px 0px 3px;" rowspan="2" width="100px">Leave Notes</td>
+			<td class="i_table_header" style="padding:0px 3px 0px 3px;" rowspan="2" width="92px">Status</td>
+			<td class="i_table_header" style="padding:0px 3px 0px 3px;" rowspan="2" width="94px">Status Details</td>
+			<td class="i_table_header" style="padding:0px 3px 0px 3px;" rowspan="2" width="98px">Remarks</td>
 			<td class="i_table_header" style="padding:0px 3px 0px 3px;" colspan="2" rowspan="2" width="41px">&nbsp;</td>
 		</tr>
 		<tr>
-			<td class="i_table_header" style="padding:0px 3px 0px 3px;" width="85px">From</td>
-			<td class="i_table_header" style="padding:0px 3px 0px 3px;" width="85px">To</td>
+			<td class="i_table_header" style="padding:0px 3px 0px 3px;" width="104px">From</td>
+			<td class="i_table_header" style="padding:0px 3px 0px 3px;" width="104px">To</td>
 		</tr>
 	</table>
-	<div id="pending_loading_1" class="loading_div brief_info_emp_1" style="left:27px;width:895px;height:270px;">
+	<div id="pending_loading_1" class="loading_div brief_info_emp_1" style="left:27px;width:1095px;height:270px;">
 		<table width='100%' height='100%'><tr valign='center'><td align='center'><img src="css/<?php echo $_SESSION['theme']; ?>/images/loader.gif"/><br/><span class="loading_text">Loading...</span></td></tr></table>
 	</div>
-	<div style="height:270px;width:898px;border:1px dotted #6D84B4;margin-left:20px;margin-right:20px;padding:0px;overflow-x:hidden;overflow-y:scroll;">
-		<table style="width:881px;" cellspacing="0">
+	<div style="height:270px;width:1100px;border:1px dotted #6D84B4;margin-left:20px;margin-right:20px;padding:0px;overflow-x:hidden;overflow-y:scroll;">
+		<table style="width:1100px;" cellspacing="0">
 			<?php
 				//echo"<tr><td colspan='10'>$St<br>$sql</td></tr>";
 				$records=Array();
-				$sql="SELECT `EmpID`, `LivAppNotes`, `LivAppID`, `LeaveTypeID`, `LivAppDays`, DATE_FORMAT(`LivAppFiledDate`, '%b %d, %Y') AS LivAppFiledDate, DATE_FORMAT(`LivAppIncDateFrom`, '%b %d, %Y') AS LivAppIncDateFrom,`LivAppIncDayTimeFrom`,DATE_FORMAT(`LivAppIncDateTo`, '%b %d, %Y') AS LivAppIncDateTo, `LivAppIncDayTimeTo`,`LivAppStatus`, `LivAppCheckedRemarks`, `LivAppNotedRemarks`, `LivAppApprovedRemarks`  FROM `tblempleaveapplications` WHERE `LivAppStatus` <> '0' ".$StStr." ORDER BY `LivAppIncDateFrom` DESC;";
+				$sql="SELECT `EmpID`, `LivAppNotes`, `LivAppID`, `LeaveTypeID`, `LivAppDays`, DATE_FORMAT(`LivAppFiledDate`, '%b %d, %Y') AS LivAppFiledDate, DATE_FORMAT(`LivAppIncDateFrom`, '%b %d, %Y') AS LivAppIncDateFrom,`LivAppIncDayTimeFrom`,DATE_FORMAT(`LivAppIncDateTo`, '%b %d, %Y') AS LivAppIncDateTo, `LivAppIncDayTimeTo`, (SELECT CONCAT(EmpFName, ' ', EmpLName) FROM tblemppersonalinfo WHERE EmpID = LivAppNotedBy) noted_by, LivAppNotedBy, `LivAppNotedTime`, (SELECT CONCAT(EmpFName, ' ', EmpLName) FROM tblemppersonalinfo WHERE EmpID = LivAppCheckedBy) check_by, LivAppCheckedBy, `LivAppCheckedTime`, (SELECT CONCAT(EmpFName, ' ', EmpLName) FROM tblemppersonalinfo WHERE EmpID = LivAppApprovedBy) approved_by, LivAppApprovedBy, `LivAppApprovedTime`, `LivAppStatus`, `LivAppCheckedRemarks`, `LivAppNotedRemarks`, `LivAppApprovedRemarks`  FROM `tblempleaveapplications` WHERE `LivAppStatus` <> '0' ".$StStr." ORDER BY `LivAppIncDateFrom` DESC;";
 				$view_records=$MySQLi->sqlQuery($sql);
 				$n=1;
 				while($records=mysqli_fetch_array($view_records, MYSQLI_BOTH)){
 					if($n%2==0){echo "<tr class='i_table_row_1'>";}
 					else{echo "<tr class='i_table_row_0'>";}
-					echo "<td align='right' width='22px' valign='top' style='padding:4px 5px 3px 0px;'>".$n.".</td>";
+					echo "<td align='right' width='25px' valign='top' style='padding:4px 5px 3px 0px;'>".$n.".</td>";
 					echo "<td class='i_table_body' align='center' width='70px'>".$records['LivAppFiledDate']."</td>";
 					$LeaveName=$MySQLi->GetArray("SELECT CONCAT_WS(', ',`EmpLName`, CONCAT_WS(' ',`EmpFName`, CONCAT_WS('.', SUBSTRING(`EmpMName`, 1, 1), ''))) AS EmpName FROM `tblemppersonalinfo` WHERE `EmpID`='".$records['EmpID']."';");
 					echo "<td class='i_table_body' width='130px'>".$LeaveName['EmpName']."</td>";
@@ -131,13 +132,38 @@
 					echo "<td class='i_table_body' align='center' width='45px'>".number_format($records['LivAppDays'],2)."</td>";
 					echo "<td class='i_table_body' align='center' width='85px'>".$records['LivAppIncDateFrom']." ".$records['LivAppIncDayTimeFrom']."</td>";
 					echo "<td class='i_table_body' align='center' width='85px'>".$records['LivAppIncDateTo']." ".$records['LivAppIncDayTimeTo']."</td>";
-					echo "<td class='i_table_body'>".$records['LivAppNotes']."</td>";
+					echo "<td class='i_table_body' width='80px'>".$records['LivAppNotes']."</td>";
 					switch ($records['LivAppStatus']){case '0':$leavestatus="NEW";break;case '1':$leavestatus="POSTED";break;case '2':$leavestatus="NOTED";break;case '3':$leavestatus="CHECKED";break;case '4':$leavestatus="APPROVED";break;default: $leavestatus="DISAPPROVED";break;}
 					echo "<td class='i_table_body' align='center' width='75px'>$leavestatus</td>";
+										
+					echo "<td class='i_table_body' align='left' width='75px' style='font-size: 11px;'>";
+					
+					if ($records['LivAppNotedBy'] != "") {
+						echo "<span style=\"display: inline-block; padding-bottom: 3px!important;\">";
+						echo "Noted by: <strong>$records[noted_by]</strong><br>";					
+						echo "On: <strong>".date("M j, Y",strtotime($records['LivAppNotedTime']))."</strong><br>";
+						echo "</span>";
+					}
+
+					if ($records['LivAppCheckedBy'] != "") {
+						echo "<span style=\"display: inline-block; padding-bottom: 3px!important;\">";
+						echo "Checked by: <strong>$records[check_by]</strong><br>";					
+						echo "On: <strong>".date("M j, Y",strtotime($records['LivAppCheckedTime']))."</strong><br>";
+						echo "</span>";						
+					}					
+
+					if ($records['LivAppApprovedBy'] != "") {					
+						echo "Approved by: <strong>$records[approved_by]</strong><br>";
+						echo "On: <strong>".date("M j, Y",strtotime($records['LivAppApprovedTime']))."</strong>";						
+					}
+					
+					echo "</td>";
+					
+					
 					$LivAppRemarks=strlen($records['LivAppNotedRemarks'])>0?$records['LivAppNotedRemarks']."<br/>":"";
 					$LivAppRemarks.=strlen($records['LivAppCheckedRemarks'])>0?$records['LivAppCheckedRemarks']."<br/>":"";
 					$LivAppRemarks.=strlen($records['LivAppApprovedRemarks'])>0?$records['LivAppApprovedRemarks']:"";
-					echo "<td class='i_table_body' width='120px'>".$LivAppRemarks."</td>";
+					echo "<td class='i_table_body' width='80px'>".$LivAppRemarks."</td>";
 					
 					/*
 					switch ($records['LivAppStatus']){
@@ -168,7 +194,7 @@
 		</table>
 	</div>
 
-	<table style="width:900px;padding:0px;border-spacing:1px;margin:3px 10px 10px 10px;">
+	<table style="width:1100px;padding:0px;border-spacing:1px;margin:3px 10px 10px 10px;">
 		<tr>
 			<td align="left">
 				<input type="button" value="Help" class="button ui-button ui-widget ui-corner-all" onClick="showHelp('001');return false;" />
