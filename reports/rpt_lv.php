@@ -109,6 +109,7 @@
 	$LivCred=$MySQLi->GetArray("SELECT `LivCredDateFrom` FROM `tblempleavecredits` WHERE `LivCredID`='".$LivInfo['LivCredID']."';");
 	/* Get Current/Last Leave Credit Balance */
 	$VLCredit=$SLCredit=0;
+	$AsOfDate="";
 	$result=$MySQLi->sqlQuery("SELECT `LeaveTypeID`, `LivCredBalance`, DATE_FORMAT(`LivCredDateFrom`,'%b %d, %Y') AS AsOfDate FROM `tblempleavecredits` WHERE `EmpID` = '".$LivInfo['EmpID']."' AND `LivCredDateFrom`<'".$LivCred['LivCredDateFrom']."' ORDER BY `LivCredDateFrom` ASC;");
 	$VL_credit=$SL_credit=$PL_credit=$OL_credit=$TL_credit=0;
 	while($records=mysqli_fetch_array($result, MYSQLI_BOTH)){
